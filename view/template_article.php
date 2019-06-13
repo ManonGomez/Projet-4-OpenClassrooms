@@ -36,10 +36,10 @@
 </form>
 
 <?php while ($commentDisplay = $comment->fetch()) { ?>
-        <div class="completcomment"> 
-            <p><?= $commentDisplay['pseudocomment'] ?></p>
-            <p><?= $commentDisplay['txtcomment'] ?></p>
-            <p><?= $commentDisplay['datecomment'] ?></p>
-            <!--ajouter bouton signaler--!>
+<div class="completcomment">
+    <p><?= $commentDisplay['pseudocomment'] ?></p>
+    <p><?= $commentDisplay['txtcomment'] ?></p>
+    <p><?= $commentDisplay['datecomment'] ?></p>
+    <!--ajouter bouton signaler--!>
         </div>
         <?php }?>

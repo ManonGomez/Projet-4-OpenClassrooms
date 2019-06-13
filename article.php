@@ -2,14 +2,14 @@
 include 'header.php';
 include 'bdd.php';
 
-$ex=null;
 $IDarticle = htmlspecialchars($_GET['id']);
 
 require('model/model.php');
 $article = getArticle($IDarticle);
 
-$comment = $bdd->prepare("SELECT * FROM articles, comment, jonctionCA WHERE articles.IDarticle = jonctionCA.IDarticleCA AND comment.IDcomment = jonctionCA.IDcommentCA AND jonctionCA.IDarticleCA = ? ");
-$comment->execute(array($IDarticle));
+require('model/model.php');
+$comment = getJonction($IDarticle);
+
 
 if(isset ($_POST['formcomment']))
 {
@@ -26,7 +26,8 @@ if(isset ($_POST['formcomment']))
             {
                 $insertcom = $bdd->prepare("INSERT INTO comment(txtcomment, datecomment, pseudocomment) VALUES(?, NOW(), ?)");
                 $insertcom->execute(array($textcomment, $pseudocomment));
-                $reqIDcomment = $bdd->query('SELECT IDcomment FROM comment WHERE IDcomment=(SELECT MAX(IDcomment) FROM comment)');
+                require('model/model.php');
+                $reqIDcomment = getComment();
                 while ($reqID = $reqIDcomment->fetch()) {
                     $IDcomment = $reqID['IDcomment'];
                 }

@@ -10,8 +10,8 @@ if(empty($_SESSION['username'])AND empty($_SESSION['mail']))
         {
             $pseudo = htmlspecialchars($_POST['pseudo']);
             $password = hash('sha256', $salt.$_POST['password']);
-            $requser = $bdd->prepare("SELECT * FROM users WHERE username = ? AND password = ?");
-            $requser->execute(array($pseudo, $password));
+            require('model/model.php');
+            $requser = getUser($pseudo, $password);
             $userexist = $requser->rowCount();
             if($userexist == 1)
             {
@@ -49,35 +49,10 @@ else
 {
    header("Location: index.php");
 }
+
+ require('view/template_connect.php');  
 ?>
 
-<form method="post" class="connexion">
-
-    <div class="form-group">
-        <label for="exampleFormControlInput1">Pseudo</label>
-        <input class="field form-control" type="text" name="pseudo" id="pseudo" required="" autofocus="">
-    </div>
-
-
-    <div class="form-group">
-        <label for="exampleFormControlInput1">Mot de passe</label>
-        <input class="field form-control" type="password" required="" name="password" id="password">
-    </div>
-
-    <input class="btn btn-outline-dark" id="send" name="formconnexion" type="submit" value="Se connecter">
-    <?php 
-        
-        if(isset($error))
-        {
-            echo '<p>'.$error.'</p>';
-        }
-        if(isset($message))
-        {
-            echo '<p>'.$message.'<p>';
-        }
-        
-        ?>
-</form>
 
 <?php
 include 'footer.php';

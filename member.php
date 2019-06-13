@@ -1,10 +1,10 @@
 <?php
 include 'header.php';
 include 'bdd.php';
+
+ require('view/template_member.php');  
+
 ?>
 
-<h2>
-    Bienvenue <?php echo $_SESSION['firstname']; ?> !
-</h2>
 
 <?php include 'footer.php'; ?>
