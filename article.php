@@ -2,7 +2,7 @@
 include 'header.php';
 include 'bdd.php';
 
-
+$ex=null;
 $IDarticle = htmlspecialchars($_GET['id']);
 
 require('model/model.php');
