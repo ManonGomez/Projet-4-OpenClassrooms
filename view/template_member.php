@@ -1,3 +1,4 @@
 <h2>
-    Bienvenue <?php echo $_SESSION['firstname']; ?> !
+    Bienvenue <?= $_SESSION['firstname']; ?> !
+    <!--echo remplace par?= -->
 </h2>

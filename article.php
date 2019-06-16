@@ -10,6 +10,17 @@ $article = getArticle($IDarticle);
 require('model/model.php');
 $comment = getJonction($IDarticle);
 
+        if(isset($_POST['signal']))
+        {
+            $signalcom = $bdd->prepare('UPDATE comment SET rate = rate + 1 WHERE IDcomment = ?');
+            $signalcom->execute(array($IDarticle));   
+        }
+
+//rediriger si url id de larticle existe pas
+if(isset($IDarticle))
+{
+    header("Location: index.php");
+}
 
 if(isset ($_POST['formcomment']))
 {
@@ -34,7 +45,7 @@ if(isset ($_POST['formcomment']))
                 $insertjonct = $bdd->prepare("INSERT INTO jonctionCA(IDarticleCA, IDcommentCA) VALUES(?, ?)");
                 $insertjonct->execute(array($IDarticle, $IDcomment));
                 $message='Votre commentaire à été publié'; 
-
+            
             }
             else
             {
@@ -54,8 +65,4 @@ if(isset ($_POST['formcomment']))
     
  require('view/template_article.php');   
     
-?>
-
-
-
-<?php include 'footer.php'; ?>
+include 'footer.php'; 

@@ -34,16 +34,12 @@ session_start();
                     </li>
 
                     <?php
-                    if(!empty($_SESSION['username']) AND !empty($_SESSION['mail']))
-                    {
+                    if (!empty($_SESSION['username']) and !empty($_SESSION['mail'])) {
                         echo '<li class="nav-item"><a class="nav-link" href="disconnect.php" class="disconnect log">Déconnexion</a></li>';
-                        if($_SESSION['admin'] == 1)
-                        {
-                         echo '<li class="nav-item"><a class="nav-link" href="gestion.php" class="gestion log">Gestion</a></li>';  
+                        if ($_SESSION['admin'] == 1) {
+                            echo '<li class="nav-item"><a class="nav-link" href="gestion.php" class="gestion log">Gestion</a></li>';
                         }
-                    }
-                    else
-                    {
+                    } else {
                         echo '<li class="nav-item"><a class="nav-link btn btn-outline-dark" href="connect.php">Connexion</a></li>
 
 <li><a href="inscription.php" class="nav-link btn btn-outline-dark">Inscription</a></li>';

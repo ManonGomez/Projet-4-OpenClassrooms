@@ -5,16 +5,19 @@
     <input type="text" id="title" name="titlearea" placeholder="Titre du billet">
     <textarea id="mytextarea" name="textarea"></textarea>
     <input type="submit" id="send" name="billetvalid" value="Publier">
-    <?php 
-        
-        if(isset($error))
-        {
-            echo '<p>'.$error.'</p>';
-        }
-        if(isset($message))
-        {
-            echo '<p>'.$message.'<p>';
-        }
-        
-        ?>
+    <?php
+
+    if (isset($error)) {
+        echo '<p>' . $error . '</p>';
+    }
+    if (isset($message)) {
+        echo '<p>' . $message . '<p>';
+    }
+
+    ?>
 </form>
+<script>
+    tinymce.init({
+        selector: '#mytextarea'
+    });
+</script>

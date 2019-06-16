@@ -2,12 +2,16 @@
 
     <div class="form-group">
         <label for="exampleFormControlInput1">Pseudo</label>
-        <input type="text" id="pseudo" class="form-control" name="pseudo" value="<?php if(isset($_SESSION['username'])){echo $_SESSION['username'];}?>">
+        <input type="text" id="pseudo" class="form-control" name="pseudo" value="<?php if (isset($_SESSION['username'])) {
+                                                                                        echo $_SESSION['username'];
+                                                                                    } ?>">
     </div>
 
     <div class="form-group">
         <label for="exampleFormControlInput2">E-Mail</label>
-        <input type="email" id="mail" class="form-control" name="mail" value="<?php if(isset($_SESSION['mail'])){echo $_SESSION['mail'];}?>">
+        <input type="email" id="mail" class="form-control" name="mail" value="<?php if (isset($_SESSION['mail'])) {
+                                                                                    echo $_SESSION['mail'];
+                                                                                } ?>">
     </div>
 
     <div class="form-group">
@@ -21,16 +25,14 @@
     </div>
 
     <input type="submit" id="send" name="formcontact" value="Envoyer" class="btn btn-outline-dark">
-    <?php 
-        
-        if(isset($error))
-        {
-            echo '<p>'.$error.'</p>';
-        }
-        if(isset($message))
-        {
-            echo '<p>'.$message.'<p>';
-        }
-        
-        ?>
+    <?php
+
+    if (isset($error)) {
+        echo '<p>' . $error . '</p>';
+    }
+    if (isset($message)) {
+        echo '<p>' . $message . '<p>';
+    }
+
+    ?>
 </form>

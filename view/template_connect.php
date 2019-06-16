@@ -12,16 +12,14 @@
     </div>
 
     <input class="btn btn-outline-dark" id="send" name="formconnexion" type="submit" value="Se connecter">
-    <?php 
-        
-        if(isset($error))
-        {
-            echo '<p>'.$error.'</p>';
-        }
-        if(isset($message))
-        {
-            echo '<p>'.$message.'<p>';
-        }
-        
-        ?>
+    <?php
+
+    if (isset($error)) {
+        echo '<p>' . $error . '</p>';
+    }
+    if (isset($message)) {
+        echo '<p>' . $message . '<p>';
+    }
+
+    ?>
 </form>

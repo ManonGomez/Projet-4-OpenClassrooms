@@ -1,16 +1,16 @@
 <?php while ($dataarticle = $article->fetch()) { ?>
 <div class="articleComplet">
     <h2><?= $dataarticle['titlearticle'] ?></h2>
-    <p><?= htmlspecialchars_decode( $dataarticle['textarticle'])?></p>
+    <p><?= htmlspecialchars_decode($dataarticle['textarticle']) ?></p>
     <p><?= $dataarticle['datearticle'] ?></p>
 </div>
-<?php }?>
+<?php } ?>
 
 <form method="post" class="commentform">
 
     <div class="form-group">
         <label for="exampleFormControlInput1"></label>
-        <input class="field form-control" type="text" name="pseudo" id="pseudo" required="" autofocus="" placeholder="Pseudo" value="<?php if(isset($_SESSION['username'])){echo $_SESSION['username'];}?>">
+        <input class="field form-control" type="text" name="pseudo" id="pseudo" required="" autofocus="" placeholder="Pseudo" value="<?php if (isset($_SESSION['username'])) { } ?>">
     </div>
 
     <div class="form-group">
@@ -20,18 +20,16 @@
 
     <input type="submit" id="send" name="formcomment" value="Commenter" class="btn btn-outline-dark">
 
-    <?php 
-        
-        if(isset($error))
-        {
-            echo '<p>'.$error.'</p>';
-        }
-        if(isset($message))
-        {
-            echo '<p>'.$message.'<p>';
-        }
-        
-        ?>
+    <?php
+
+    if (isset($error)) {
+        echo '<p>' . $error . '</p>';
+    }
+    if (isset($message)) {
+        echo '<p>' . $message . '<p>';
+    }
+
+    ?>
 
 </form>
 
@@ -40,6 +38,8 @@
     <p><?= $commentDisplay['pseudocomment'] ?></p>
     <p><?= $commentDisplay['txtcomment'] ?></p>
     <p><?= $commentDisplay['datecomment'] ?></p>
-    <!--ajouter bouton signaler--!>
-        </div>
-        <?php }?>
+    <form method="post">
+        <input type="submit" class="btn btn-danger" value="Signaler" name="signal">
+    </form>
+</div>
+<?php } ?>

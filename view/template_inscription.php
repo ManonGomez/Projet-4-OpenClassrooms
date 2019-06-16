@@ -32,17 +32,15 @@
         </div>
 
         <input type="submit" id="send" name="forminscription" value="S'inscrire" class="btn btn-outline-dark">
-        <?php 
-        
-        if(isset($error))
-        {
-            echo '<p>'.$error.'</p>';
+        <?php
+
+        if (isset($error)) {
+            echo '<p>' . $error . '</p>';
         }
-        if(isset($message))
-        {
-            echo '<p>'.$message.'<p>';
+        if (isset($message)) {
+            echo '<p>' . $message . '<p>';
         }
-        
+
         ?>
     </form>
 
