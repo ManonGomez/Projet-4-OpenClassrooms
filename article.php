@@ -22,16 +22,16 @@ if(isset($IDarticle))
     header("Location: index.php");
 }
 
+if ($_SESSION['admin'] == 0)
+{
 if(isset ($_POST['formcomment']))
 {
-    $pseudocomment = htmlspecialchars($_POST['pseudo']);
+    $pseudocomment = htmlspecialchars( $_SESSION['username']);
     $textcomment = htmlspecialchars($_POST['message']);
     
     if(!empty($pseudocomment) AND !empty($textcomment))
     {
-        $pseudolenght = strlen($pseudocomment);
-        if($pseudolenght <= 20 AND $pseudolenght >= 5)
-        {
+       
             $textcommentlenght = strlen($textcomment);
             if($textcommentlenght <=110 AND $textcommentlenght >=4)
             {
@@ -51,17 +51,21 @@ if(isset ($_POST['formcomment']))
             {
                 $error = 'Le commentaire doit comprendre au minimum 4 cractères et au maximum 110';
             }
-        }
-        else
-        {
-            $error = 'Le pseudo doit avoir entre 5 et 20 lettres';
-        }
+        
     }
     else
     {
         $error = 'Veuillez compléter tous les champs';
     }
 }
+    else
+    {
+        $display = "display:none;";
+        $error = 'pour laisser un commentaire, connectez-vous ou inscrivez-vous';
+    }
+}
+
+    
     
  require('view/template_article.php');   
     

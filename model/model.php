@@ -98,3 +98,17 @@ function getPseudo($pseudo)
     $reqpseudo->execute(array($pseudo));
     return $reqpseudo;
 }
+//from delete.php
+function getNameArticle($IDdelete)
+{
+
+    try {
+        $bdd = new PDO('mysql:host=sql.chaffy.net;dbname=w1vy57_phpmanon', 'w1vy57_phpmanon', '#MaBase01240#');
+    } catch (Exception $e) {
+        die('Erreur : ' . $e->getMessage());
+    }
+
+    $namearticle = $bdd->prepare('SELECT titlearticle FROM articles WHERE IDarticle=?');
+$namearticle->execute(array($IDdelete));
+     return $namearticle;
+}

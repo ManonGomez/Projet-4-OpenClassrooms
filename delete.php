@@ -2,12 +2,14 @@
 include 'header.php';
 include 'bdd.php';
 //et supprimer les comm qui vont avec les artcilesen utilisant la jonction
+if ($_SESSION['admin'] == 0) {
+    header("Location: index.php");
+}
 
 $IDdelete = htmlspecialchars($_GET['id']);
 
-
-$namearticle = $bdd->prepare('SELECT titlearticle FROM articles WHERE IDarticle=?');
-$namearticle->execute(array($IDdelete));
+require('model/model.php');
+$namearticle = getNameArticle($IDdelete);
 
 if(isset($_POST['valid']))
 {
@@ -21,26 +23,7 @@ if(isset($_POST['delete']))
     header("Location: gestion.php");
 }
 
-?>
-
-
-
-
-
-
-<?php while ($showname = $namearticle->fetch()) { ?>
-
-<h3>Voulez-vous supprimer <?= $showname['titlearticle'] ?> ?</h3>
-<form method="post">
-    <input type="submit" id="send" name="valid" value="Non" class="btn btn-outline-dark">
-</form>
-<form method="post">
-    <input type="submit" id="send" name="delete" value="Oui" class="btn btn-outline-dark">
-</form>
-
-<?php } ?>
-
-<?php
+require('view/template_delete.php');
 
 include 'footer.php'; 
-?>
+
