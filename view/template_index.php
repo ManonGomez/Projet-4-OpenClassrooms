@@ -5,7 +5,7 @@
         <?php while ($showarticles = $articles->fetch()) { ?>
             <div class="completArticle">
                 <!--  = apres ? permet de reprendre le php dans une boucle dit au code je remet du php qui appartient à la boule précedente ID créer-->
-                <h2><a href="article.php?id=<?= $showarticles['IDarticle'] ?>"><?= $showarticles['titlearticle'] ?></a></h2>
+                <h2><a href="index.php?action=post&id=<?= $showarticles['IDarticle'] ?>"><?= $showarticles['titlearticle'] ?></a></h2>
                 <p><?= htmlspecialchars_decode($showarticles['textarticle']) ?></p>
                 <p><?= $showarticles['datearticle'] ?></p>
             </div>

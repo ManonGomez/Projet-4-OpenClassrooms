@@ -1,114 +1,131 @@
 <?php
-//from article.php
-function getArticle($IDarticle)
-{
+        function dbConnect()
+        {
+            try {
+                $bdd = new PDO('mysql:host=sql.chaffy.net;dbname=w1vy57_phpmanon', 'w1vy57_phpmanon', '#MaBase01240#');
+                return $bdd;
+            } catch (Exception $e) {
+                die('Erreur : ' . $e->getMessage());
+            }
+        }
 
-    try {
-        $bdd = new PDO('mysql:host=sql.chaffy.net;dbname=w1vy57_phpmanon', 'w1vy57_phpmanon', '#MaBase01240#');
-    } catch (Exception $e) {
-        die('Erreur : ' . $e->getMessage());
-    }
+        //from article.php
+        function getArticle($IDarticle)
+        {
+            $bdd = dbConnect();
+            $article = $bdd->prepare("SELECT * FROM articles WHERE IDarticle = ?");
+            $article->execute(array($IDarticle));
+            return $article;
+        }
 
-    $article = $bdd->prepare("SELECT * FROM articles WHERE IDarticle = ?");
-    $article->execute(array($IDarticle));
-    return $article;
-}
+        function getComments($IDarticle)
+        {
 
-function getJonction($IDarticle)
-{
+            $bdd = dbConnect();
+            $comment = $bdd->prepare("SELECT * FROM articles, comment, jonctionCA WHERE articles.IDarticle = jonctionCA.IDarticleCA AND comment.IDcomment = jonctionCA.IDcommentCA AND jonctionCA.IDarticleCA = ? ");
+            $comment->execute(array($IDarticle));
+            return $comment;
+        }
 
-    try {
-        $bdd = new PDO('mysql:host=sql.chaffy.net;dbname=w1vy57_phpmanon', 'w1vy57_phpmanon', '#MaBase01240#');
-    } catch (Exception $e) {
-        die('Erreur : ' . $e->getMessage());
-    }
+        function getCommentID()
+        {
 
-    $comment = $bdd->prepare("SELECT * FROM articles, comment, jonctionCA WHERE articles.IDarticle = jonctionCA.IDarticleCA AND comment.IDcomment = jonctionCA.IDcommentCA AND jonctionCA.IDarticleCA = ? ");
-    $comment->execute(array($IDarticle));
-    return $comment;
-}
+            $bdd = dbConnect();
+            $reqIDcomment = $bdd->query('SELECT IDcomment FROM comment WHERE IDcomment=(SELECT MAX(IDcomment) FROM comment)');
+            return $reqIDcomment;
+        }
 
-function getComment()
-{
+        //from connect.php
+        function getUser($pseudo, $password)
+        {
 
-    try {
-        $bdd = new PDO('mysql:host=sql.chaffy.net;dbname=w1vy57_phpmanon', 'w1vy57_phpmanon', '#MaBase01240#');
-    } catch (Exception $e) {
-        die('Erreur : ' . $e->getMessage());
-    }
+            $bdd = dbConnect();
+            $requser = $bdd->prepare("SELECT * FROM users WHERE username = ? AND password = ?");
+            $requser->execute(array($pseudo, $password));
+            return $requser;
+        }
 
-    $reqIDcomment = $bdd->query('SELECT IDcomment FROM comment WHERE IDcomment=(SELECT MAX(IDcomment) FROM comment)');
-    return $reqIDcomment;
-}
+        //from index.php
+        function getArticles()
+        {
 
-//from connect.php
-function getUser($pseudo, $password)
-{
+            $bdd = dbConnect();
+            $articles = $bdd->query('SELECT * FROM articles ORDER BY datearticle ASC');
+            return $articles;
+        }
 
-    try {
-        $bdd = new PDO('mysql:host=sql.chaffy.net;dbname=w1vy57_phpmanon', 'w1vy57_phpmanon', '#MaBase01240#');
-    } catch (Exception $e) {
-        die('Erreur : ' . $e->getMessage());
-    }
+        //from inscription.php
+        function getMail($mail)
+        {
 
-    $requser = $bdd->prepare("SELECT * FROM users WHERE username = ? AND password = ?");
-    $requser->execute(array($pseudo, $password));
-    return $requser;
-}
+            $bdd = dbConnect();
+            $reqmail = $bdd->prepare("SELECT * FROM users WHERE mail = ?");
+            $reqmail->execute(array($mail));
+            return $reqmail;
+        }
 
-//from index.php
-function getArticles()
-{
+        function getPseudo($pseudo)
+        {
 
-    try {
-        $bdd = new PDO('mysql:host=sql.chaffy.net;dbname=w1vy57_phpmanon', 'w1vy57_phpmanon', '#MaBase01240#');
-    } catch (Exception $e) {
-        die('Erreur : ' . $e->getMessage());
-    }
+            $bdd = dbConnect();
+            $reqpseudo = $bdd->prepare("SELECT *FROM users WHERE username = ?");
+            $reqpseudo->execute(array($pseudo));
+            return $reqpseudo;
+        }
+        //from delete.php
+        function getNameArticle($IDdelete)
+        {
 
-    $articles = $bdd->query('SELECT * FROM articles ORDER BY datearticle ASC');
-    return $articles;
-}
+            $bdd = dbConnect();
+            $namearticle = $bdd->prepare('SELECT titlearticle FROM articles WHERE IDarticle=?');
+            $namearticle->execute(array($IDdelete));
+            return $namearticle;
+        }
 
-//from inscription.php
-function getMail($mail)
-{
+        //from deletecom.php
+        function gettextcom($IDdelete)
+        {
 
-    try {
-        $bdd = new PDO('mysql:host=sql.chaffy.net;dbname=w1vy57_phpmanon', 'w1vy57_phpmanon', '#MaBase01240#');
-    } catch (Exception $e) {
-        die('Erreur : ' . $e->getMessage());
-    }
+            $bdd = dbConnect();
+            $txtcomment = $bdd->prepare('SELECT txtcomment FROM comment WHERE IDcomment=?');
+            $txtcomment->execute(array($IDdelete));
+            return $txtcomment;
+        }
 
-    $reqmail = $bdd->prepare("SELECT * FROM users WHERE mail = ?");
-    $reqmail->execute(array($mail));
-    return $reqmail;
-}
+        //from gestion.php
+        function getArticleBYDate()
+        {
 
-function getPseudo($pseudo)
-{
+            $bdd = dbConnect();
+            $articles = $bdd->query('SELECT * FROM articles ORDER BY datearticle ASC');
+            return $articles;
+        }
 
-    try {
-        $bdd = new PDO('mysql:host=sql.chaffy.net;dbname=w1vy57_phpmanon', 'w1vy57_phpmanon', '#MaBase01240#');
-    } catch (Exception $e) {
-        die('Erreur : ' . $e->getMessage());
-    }
+        //from gestioncom.php
+        function getCOMBYDate()
+        {
 
-    $reqpseudo = $bdd->prepare("SELECT *FROM users WHERE username = ?");
-    $reqpseudo->execute(array($pseudo));
-    return $reqpseudo;
-}
-//from delete.php
-function getNameArticle($IDdelete)
-{
+            $bdd = dbConnect();
+            $comment = $bdd->query('SELECT * FROM comment WHERE rate >0 ORDER BY rate DESC');
+            return $comment;
+        }
 
-    try {
-        $bdd = new PDO('mysql:host=sql.chaffy.net;dbname=w1vy57_phpmanon', 'w1vy57_phpmanon', '#MaBase01240#');
-    } catch (Exception $e) {
-        die('Erreur : ' . $e->getMessage());
-    }
+        //from update.php
+        function getArticleUp($IDupdate)
+        {
 
-    $namearticle = $bdd->prepare('SELECT titlearticle FROM articles WHERE IDarticle=?');
-$namearticle->execute(array($IDdelete));
-     return $namearticle;
-}
+            $bdd = dbConnect();
+            $articles = $bdd->prepare('SELECT titlearticle, textarticle FROM articles WHERE IDarticle=?');
+            $articles->execute(array($IDupdate));
+            return $articles;
+        }
+
+        //from validcom.php
+        function getComByID($IDval)
+        {
+
+            $bdd = dbConnect();
+            $txtcomment = $bdd->prepare('SELECT txtcomment FROM comment WHERE IDcomment=?');
+            $txtcomment->execute(array($IDval));
+            return $txtxomment;
+        }

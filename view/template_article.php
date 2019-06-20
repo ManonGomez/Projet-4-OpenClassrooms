@@ -10,7 +10,7 @@
 
     <div class="form-group">
         <label for="exampleFormControlInput1"></label>
-        <input class="field form-control" type="text" name="pseudo" id="pseudo" required="" autofocus="" placeholder="Pseudo" value="<?php if (isset($_SESSION['username'])) { } ?> disabled="disabled"">
+        <input class="field form-control" type="text" name="pseudo" id="pseudo" required="" autofocus="" placeholder="Pseudo" value="<?php if (isset($_SESSION['username'])) { } ?> "disabled="disabled">
     </div>
 
     <div class="form-group">
