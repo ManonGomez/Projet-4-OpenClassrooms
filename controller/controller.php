@@ -1,24 +1,27 @@
 <?php
 
 require_once('model/model.php');
-
-class dataArticles
-{
+require_once('model/PostManager.php');
+//class dataArticles
+//{
     //ex propriete public $nom = valeur
-    public function listPosts()
+   function listPosts()
     {
-        $articles = getArticles();
+       $postManager = new PostManager();
+       //print_r($postManager); 
+       $articles = $postManager->getArticles();
         require('view/template_index.php');
     }
-}
+//}
 
 
-class dataComment
-{
-    public function Post()
+
+ function Post()
     {
+      $postManager = new PostManager();
+     
         $IDarticle = $_GET['id'];
-        $article = getArticle($IDarticle);
+        $article = $postManager->getArticle($IDarticle);
         $comment = getComments($IDarticle);
 
         if ($_SESSION['admin'] == 0) {
@@ -53,17 +56,15 @@ class dataComment
 
 
         require('view/template_article.php');
-    }
-}
+ }
 
-class administrationSpace
-{
-    public function member()
+
+
+    function member()
     {
         require('view/template_member.php');
     }
-
-    public function admin()
+function admin()
     {
         if ($_SESSION['admin'] == 0) {
             header("Location: index.php");
@@ -86,7 +87,7 @@ class administrationSpace
     }
 
 
-    public function connect()
+   function connect()
     {
         if (empty($_SESSION['username']) and empty($_SESSION['mail'])) {
             if (isset($_POST['formconnexion'])) {
@@ -125,7 +126,7 @@ class administrationSpace
         require('view/template_connect.php');
     }
 
-    public function disconnect()
+function disconnect()
     {
         session_start();
         $_SESSION = array();
@@ -135,7 +136,7 @@ class administrationSpace
 
 
 
-    public function inscription()
+     function inscription()
     {
         if (isset($_POST['forminscription'])) {
             if (!empty($_POST['pseudo']) and !empty($_POST['firstname']) and !empty($_POST['lastname']) and !empty($_POST['mail']) and !empty($_POST['password']) and !empty($_POST['passwordconfirm'])) {
@@ -197,32 +198,26 @@ class administrationSpace
 
         require('view/template_inscription.php');
     }
-}
 
-
-class crudArticles
-{
-
-    public function gestion()
+     function gestion()
     {
+        $articles = getArticleBYDate();
+        
         if ($_SESSION['admin'] == 0) {
             header("Location: index.php");
         }
-
-        $articles = getArticleBYDate();
-
         require('view/template_gestion.php');
     }
 
-    public function updatearticle()
+     function updatearticle()
     {
-        if ($_SESSION['admin'] == 0) {
-            header("Location: index.php");
-        }
-
         $IDupdate = htmlspecialchars($_GET['id']);
 
         $articles = getArticleUp($IDupdate);
+
+        if ($_SESSION['admin'] == 0) {
+            header("Location: index.php");
+        }
 
         if (isset($_POST['billetup'])) {
             if (!empty($_POST['titlearea']) and !empty($_POST['textarea'])) {
@@ -238,16 +233,14 @@ class crudArticles
 
         require('view/template_updatearticle.php');
     }
-    public function delete()
+     function delete()
     {
+        $IDdelete = htmlspecialchars($_GET['id']);
+        $namearticle = getNameArticle($IDdelete);
         //et supprimer les comm qui vont avec les artcilesen utilisant la jonction
         if ($_SESSION['admin'] == 0) {
             header("Location: index.php");
         }
-
-        $IDdelete = htmlspecialchars($_GET['id']);
-
-        $namearticle = getNameArticle($IDdelete);
 
         if (isset($_POST['valid'])) {
             header("Location: gestion.php");
@@ -261,12 +254,8 @@ class crudArticles
 
         require('view/template_delete.php');
     }
-}
 
-class crudCom
-{
-
-    public function gestioncom()
+    function gestioncom()
     {
         if ($_SESSION['admin'] == 0) {
             header("Location: index.php");
@@ -275,7 +264,7 @@ class crudCom
         require('view/template_gestioncom.php');
     }
 
-    public function validcom()
+    function validcom()
     {
 
         $IDval = htmlspecialchars($_GET['id']);
@@ -294,7 +283,7 @@ class crudCom
         require('view/template_validcom.php');
     }
 
-    public function deletecom()
+  function deletecom()
     {
         if ($_SESSION['admin'] == 0) {
             header("Location: index.php");
@@ -318,11 +307,10 @@ class crudCom
 
         require('view/template_deletecom.php');
     }
-}
 
-class contact
-{
-    public  function contact()
+
+
+   function contact()
     {
         if (isset($_POST['formcontact'])) {
             $origin = "Contact Billet simple pour l'Alaska";
@@ -360,4 +348,3 @@ class contact
         }
         require('view/template_contact.php');
     }
-}

@@ -1,8 +1,10 @@
 <?php
-include 'header.php';
+include 'view/header.php';
 
 require('controller/controller.php');
 
+
+try{
 if (isset($_GET['action'])) {
     if ($_GET['action'] == 'listPosts') {
         listPosts();
@@ -10,7 +12,7 @@ if (isset($_GET['action'])) {
         if (isset($_GET['id']) && $_GET['id'] > 0) {
             post();
         } else {
-            echo 'Erreur : aucun identifiant de billet envoyé';
+             throw new Exception('Aucun identifiant de billet envoyé');
         }
     } elseif ($_GET['action'] == 'contact') {
         contact();
@@ -51,7 +53,11 @@ if (isset($_GET['action'])) {
 } else {
     listPosts();
 }
+}
+catch(Exception $e) {
+    echo 'Erreur : ' . $e->getMessage();
+}
 
 
 
-include 'footer.php';
+include 'view/footer.php';
