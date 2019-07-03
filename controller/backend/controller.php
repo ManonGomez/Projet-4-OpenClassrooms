@@ -1,7 +1,12 @@
 <?php
 
-require_once('model/model.php');
-require_once('model/PostManager.php');
+namespace controller\backend\controller;
+
+use model\backend\Manager;
+use model\frontend\PostManager;
+
+//require_once('model/model.php');
+//require_once('model/PostManager.php');
 //class dataArticles
 //{
     //ex propriete public $nom = valeur
@@ -10,7 +15,7 @@ require_once('model/PostManager.php');
        $postManager = new PostManager();
        //print_r($postManager); 
        $articles = $postManager->getArticles();
-        require('view/template_index.php');
+        require('view/frontend/template_index.php');
     }
 //}
 
@@ -55,15 +60,12 @@ require_once('model/PostManager.php');
         }
 
 
-        require('view/template_article.php');
+        require('view/frontend/template_article.php');
  }
 
 
 
-    function member()
-    {
-        require('view/template_member.php');
-    }
+  
 function admin()
     {
         if ($_SESSION['admin'] == 0) {
@@ -83,7 +85,7 @@ function admin()
             }
         }
 
-        require('view/template_admin.php');
+        require('view/frontend/template_admin.php');
     }
 
 
@@ -110,7 +112,7 @@ function admin()
                         if ($userdata['admin'] == 1) {
                             header("Location: admin.php");
                         } else {
-                            header("Location: member.php");
+                            header("Location: index.php");
                         }
                     } else {
                         $error = 'Veuillez compléter tous les champs.';
@@ -123,7 +125,7 @@ function admin()
             header("Location: index.php");
         }
 
-        require('view/template_connect.php');
+        require('view/frontend/template_connect.php');
     }
 
 function disconnect()
@@ -136,68 +138,6 @@ function disconnect()
 
 
 
-     function inscription()
-    {
-        if (isset($_POST['forminscription'])) {
-            if (!empty($_POST['pseudo']) and !empty($_POST['firstname']) and !empty($_POST['lastname']) and !empty($_POST['mail']) and !empty($_POST['password']) and !empty($_POST['passwordconfirm'])) {
-                $pseudo = htmlspecialchars($_POST['pseudo']);
-                $firstname = htmlspecialchars($_POST['firstname']);
-                $lastname = htmlspecialchars($_POST['lastname']);
-                $mail = htmlspecialchars($_POST['mail']);
-                //hash pour encrypter et 'sha..' le format de lencyptage
-                $password = hash('sha256', $salt . $_POST['password']);
-                $confirmpassword = hash('sha256', $salt . $_POST['passwordconfirm']);
-
-                if ($password == $confirmpassword) {
-                    $pseudolenght = strlen($pseudo);
-                    if ($pseudolenght <= 20 and $pseudolenght >= 5) {
-                        $firstnamelenght = strlen($firstname);
-                        if ($firstnamelenght <= 20 and $firstnamelenght >= 2) {
-                            $lastnamelenght = strlen($lastname);
-                            if ($lastnamelenght <= 30 and $lastnamelenght >= 2) {
-                                if (filter_var($mail, FILTER_VALIDATE_EMAIL)) {
-                                    $passwordlenght = strlen($_POST['password']);
-                                    if ($passwordlenght >= 5) {
-                                        $reqmail = getMail($mail);
-                                        $mailexist = $reqmail->rowCount();
-                                        if ($mailexist == 0) {
-                                            $reqpseudo = getPseudo($pseudo);
-                                            $pseudoexist = $reqpseudo->rowCount();
-                                            if ($pseudoexist == 0) {
-                                                $insertuser = $bdd->prepare("INSERT INTO users(username, mail, password, firstname, lastname) VALUES(?, ?, ?, ?, ?)");
-                                                $insertuser->execute(array($pseudo, $mail, $password, $firstname, $lastname));
-                                                $message = 'Vous avez bien été inscrit';
-                                            } else {
-                                                $error = 'Ce pseudo est déjà pris, veuillez en choisir un autre';
-                                            }
-                                        } else {
-                                            $error = 'Cette adresse mail est déjà enregistrée';
-                                        }
-                                    } else {
-                                        $error = 'Le mot de passe est trop court';
-                                    }
-                                } else {
-                                    $error = 'Ce n\'est pas une adresse mail';
-                                }
-                            } else {
-                                $error = 'Votre nom doit avoir entre 2 et 30 caractères';
-                            }
-                        } else {
-                            $error = 'Votre prénom doit avoir entre 2 et 20 caractères';
-                        }
-                    } else {
-                        $error = 'Le pseudo doit avoir entre 5 et 20 caractères';
-                    }
-                } else {
-                    $error = 'Les mots de passe ne sont pas identiques';
-                }
-            } else {
-                $error = 'Pas tous les champs sont remplis';
-            }
-        }
-
-        require('view/template_inscription.php');
-    }
 
      function gestion()
     {
@@ -206,7 +146,7 @@ function disconnect()
         if ($_SESSION['admin'] == 0) {
             header("Location: index.php");
         }
-        require('view/template_gestion.php');
+        require('view/frontend/template_gestion.php');
     }
 
      function updatearticle()
@@ -231,7 +171,7 @@ function disconnect()
             }
         }
 
-        require('view/template_updatearticle.php');
+        require('view/frontend/template_updatearticle.php');
     }
      function delete()
     {
@@ -252,7 +192,7 @@ function disconnect()
             header("Location: gestion.php");
         }
 
-        require('view/template_delete.php');
+        require('view/frontend/template_delete.php');
     }
 
     function gestioncom()
@@ -261,7 +201,7 @@ function disconnect()
             header("Location: index.php");
         }
         $comment = getCOMBYDate();
-        require('view/template_gestioncom.php');
+        require('view/frontend/template_gestioncom.php');
     }
 
     function validcom()
@@ -280,7 +220,7 @@ function disconnect()
             $rate0->execute(array($IDval));
             header("Location: gestioncom.php");
         }
-        require('view/template_validcom.php');
+        require('view/frontend/template_validcom.php');
     }
 
   function deletecom()
@@ -305,7 +245,7 @@ function disconnect()
             header("Location: gestioncom.php");
         }
 
-        require('view/template_deletecom.php');
+        require('view/frontend/template_deletecom.php');
     }
 
 
@@ -346,5 +286,5 @@ function disconnect()
                 $error = 'Veuillez remplir tous les champs';
             }
         }
-        require('view/template_contact.php');
+        require('view/frontend/template_contact.php');
     }

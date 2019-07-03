@@ -1,8 +1,7 @@
 <?php
-namespace ManonBlog\Model\Frontend;
+namespace Model\Frontend\PostManager;
 
 use model\backend\Manager;
-//require_once('model/Manager.php');
 
 class PostManager extends Manager
 {
