@@ -1,3 +1,6 @@
+<?php $title = 'Votre espace de gestion de commentaires'; ?>
+
+<?php ob_start(); ?>
 <section class="tablecom">
     <table class="table">
         <thead class="thead-dark">
@@ -18,4 +21,4 @@
         </tbody>
     </table>
 </section>
-
+<?php $content = ob_get_clean(); ?>

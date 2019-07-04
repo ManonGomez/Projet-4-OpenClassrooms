@@ -1,8 +1,11 @@
+<?php $title = ['title']; ?>
+
+<?php ob_start(); ?>
 <?php while ($dataarticle = $article->fetch()) { ?>
 <div class="articleComplet">
-    <h2><?= $dataarticle['titlearticle'] ?></h2>
-    <p><?= htmlspecialchars_decode($dataarticle['textarticle']) ?></p>
-    <p><?= $dataarticle['datearticle'] ?></p>
+    <h2><?= $dataarticle['title'] ?></h2>
+    <p><?= htmlspecialchars_decode($dataarticle['text']) ?></p>
+    <p><?= $dataarticle['dateArticle'] ?></p>
 </div>
 <?php } ?>
 
@@ -35,11 +38,12 @@
 
 <?php while ($commentDisplay = $comment->fetch()) { ?>
 <div class="completcomment">
-    <p><?= $_SESSION['username']; ?></p>
-    <p><?= $commentDisplay['txtcomment'] ?></p>
-    <p><?= $commentDisplay['datecomment'] ?></p>
+    <p><?= $_SESSION['pseudo']; ?></p>
+    <p><?= $commentDisplay['text'] ?></p>
+    <p><?= $commentDisplay['dateComment'] ?></p>
     <form method="post">
         <input type="submit" class="btn btn-danger" value="Signaler" name="signal">
     </form>
 </div>
 <?php } ?>
+<?php $content = ob_get_clean(); ?>

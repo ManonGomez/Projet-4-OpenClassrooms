@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-include 'view/frontend/header.php';
 
 //require('controller/controller.php');
 use model\backend\Manager;
@@ -10,7 +9,7 @@ use controller\frontend\PostsController;
 use controller\frontend\CommentsController;
 
 require_once('SplClassLoader.php');
-$autoLoader = new SplClassLoader('OCFram', '/lib');
+$autoLoader = new SplClassLoader();
 $autoLoader->register();
 
 try {
@@ -81,7 +80,3 @@ try {
 catch(Exception $e) {
     echo 'Erreur : ' . $e->getMessage();
 }
-
-
-
-include 'view/front-end/footer.php';

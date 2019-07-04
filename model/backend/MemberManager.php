@@ -1,8 +1,7 @@
 <?php
 
-namespace model\backend\MemberManager;
+namespace model\backend;
 
-use model\backend\Manager;
 
 class PostManager extends Manager
 {

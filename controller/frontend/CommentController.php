@@ -1,5 +1,5 @@
 <?php
-namespace controller\frontend\CommentController;
+namespace controller\frontend;
 
 use model\frontend\CommentManager;
 

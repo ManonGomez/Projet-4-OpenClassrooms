@@ -1,8 +1,9 @@
 <?php
-namespace controller\frontend\PostController;
+namespace controller\frontend;
 
 use model\frontend\PostManager;
 use model\frontend\CommentManager;
+
 
 class PostsController extends MainController
 {
@@ -12,7 +13,7 @@ class PostsController extends MainController
         $postManager = new PostManager();
         $articles = $postManager->getArticles();
        
-        require('view/frontend/template_article.php');
+        require('view/frontend/template_index.php');
     }
 
     public function showPost($idPost)

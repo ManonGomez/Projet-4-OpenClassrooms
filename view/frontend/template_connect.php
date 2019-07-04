@@ -1,3 +1,8 @@
+<?php $title = 'Connectez-vous'; ?>
+
+
+
+<?php ob_start(); ?>
 <form method="post" class="connexion">
 
     <div class="form-group">
@@ -23,3 +28,4 @@
 
     ?>
 </form>
+<?php $content = ob_get_clean(); ?>

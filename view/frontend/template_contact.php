@@ -1,3 +1,6 @@
+<?php $title = 'Laissez-moi un message'; ?>
+
+<?php ob_start(); ?>
 <form method="post" class="contactform">
 
     <div class="form-group">
@@ -36,3 +39,4 @@
 
     ?>
 </form>
+<?php $content = ob_get_clean(); ?>

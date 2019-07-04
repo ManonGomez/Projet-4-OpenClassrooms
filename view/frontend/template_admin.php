@@ -1,3 +1,7 @@
+<?php $title = 'Votre espace'; ?>
+
+
+<?php ob_start(); ?>
 <h2>Bienvenue Jean</h2>
 
 <h3>Création des billets</h3>
@@ -21,3 +25,4 @@
         selector: '#mytextarea'
     });
 </script>
+<?php $content = ob_get_clean(); ?>

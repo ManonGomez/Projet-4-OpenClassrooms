@@ -1,8 +1,7 @@
 <?php
-namespace Model\Frontend\CommentManager;
+namespace model\frontend;
 
-use model\backend\Manager;
-//require_once('model/Manager.php');
+
 
 class CommentManager extends Manager
 {

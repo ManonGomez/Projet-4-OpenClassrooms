@@ -1,8 +1,8 @@
 <?php
 
-namespace model\backend\AdminManager;
+namespace model\backend;
 
-use model\backend\Manager;
+
 
 class AdminManager extends Manager
 {

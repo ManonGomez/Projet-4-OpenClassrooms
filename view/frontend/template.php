@@ -8,17 +8,17 @@
     <link rel="stylesheet" href="public/css/style.css">
     <link rel="stylesheet" media="screen and (max-width: 720px)" href="public/css/small.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-    <title>Billet simple pour l'Alaska</title>
+   <title><?php echo $title; ?></title>
     <meta name="description" content="Roman en ligne, chapître par chapître.">
 </head>
 
 <body>
-    <?php require('jean/view/frontend/header.php'); ?>
+    <?php require('view/frontend/header.php'); ?>
     <div class="container">
         <?php echo $content; ?>
     </div>
 
-    <?php require('jeanview/frontend/footer.php'); ?>
+    <?php require('view/frontend/footer.php'); ?>
 </body>
 
 

@@ -1,7 +1,6 @@
 <?php
-namespace Model\Frontend\PostManager;
+namespace model\frontend;
 
-use model\backend\Manager;
 
 class PostManager extends Manager
 {

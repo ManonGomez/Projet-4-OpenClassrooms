@@ -1,6 +1,6 @@
 <?php
 
-namespace controller\backend\controller;
+namespace controller\backend;
 
 use model\backend\Manager;
 use model\frontend\PostManager;
