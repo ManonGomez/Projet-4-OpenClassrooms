@@ -10,7 +10,7 @@ class CommentManager extends Manager
     {
 
         $bdd = $this->dbConnect();
-         $comment = $bdd->prepare("SELECT * FROM comments WHERE Id = ? ORDER BY dateComment DESC");
+         $comment = $bdd->prepare("SELECT * FROM comments WHERE IdArticle = ? ORDER BY dateComment DESC");
         $comment->execute(array($IDarticle));
         return $comment;
     }
@@ -26,7 +26,7 @@ class CommentManager extends Manager
       public function postComment($idArticle, $author, $comment) {
 
         $bdd = $this->dbConnect();
-        $comments = $bdd->prepare( 'INSERT INTO comments(IdArticle, pseudo, text, rate) VALUES(?,?,?,NOW() )');
+        $comments = $bdd->prepare( 'INSERT INTO comments(Id, text, dateComment, pseudo, rate) VALUES(?,?,NOW(), ?,? )');
         $affectedLines = $comments->execute(array($idArticle, $author, $comment));
 
         return $affectedLines;

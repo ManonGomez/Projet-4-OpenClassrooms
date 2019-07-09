@@ -5,16 +5,12 @@
 
     <div class="form-group">
         <label for="exampleFormControlInput1">Pseudo</label>
-        <input type="text" id="pseudo" class="form-control" name="pseudo" value="<?php if (isset($_SESSION['username'])) {
-                                                                                        echo $_SESSION['username'];
-                                                                                    } ?>"disabled="disabled">
+        <input type="text" id="pseudo" class="form-control" name="pseudo" >
     </div>
 
     <div class="form-group">
         <label for="exampleFormControlInput2">E-Mail</label>
-        <input type="email" id="mail" class="form-control" name="mail" value="<?php if (isset($_SESSION['mail'])) {
-                                                                                    echo $_SESSION['mail'];
-                                                                                } ?>" disabled="disabled">
+        <input type="email" id="mail" class="form-control" name="mail" >
     </div>
 
     <div class="form-group">
@@ -40,3 +36,4 @@
     ?>
 </form>
 <?php $content = ob_get_clean(); ?>
+<?php require('view/frontend/template.php'); ?>

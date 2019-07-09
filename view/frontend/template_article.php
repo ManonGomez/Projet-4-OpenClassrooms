@@ -1,6 +1,7 @@
 <?php $title = ['title']; ?>
 
 <?php ob_start(); ?>
+
 <?php while ($dataarticle = $article->fetch()) { ?>
 <div class="articleComplet">
     <h2><?= $dataarticle['title'] ?></h2>
@@ -13,7 +14,7 @@
 
     <div class="form-group">
         <label for="exampleFormControlInput1"></label>
-        <input class="field form-control" type="text" name="pseudo" id="pseudo" required="" autofocus="" placeholder="Pseudo" value="<?php if (isset($_SESSION['username'])) { } ?> "disabled="disabled">
+        <input class="field form-control" type="text" name="pseudo" id="pseudo" required="" autofocus="" placeholder="Pseudo" value="">
     </div>
 
     <div class="form-group">
@@ -36,9 +37,10 @@
 
 </form>
 
-<?php while ($commentDisplay = $comment->fetch()) { ?>
+<?php while ($commentDisplay = $comments->fetch()) { ?>
+<!--$comment issu de controller fonctionne comme juste au dessus $article-->
 <div class="completcomment">
-    <p><?= $_SESSION['pseudo']; ?></p>
+   <!-- <p><//?= $commentDisplay['pseudo']; ?></p>-->
     <p><?= $commentDisplay['text'] ?></p>
     <p><?= $commentDisplay['dateComment'] ?></p>
     <form method="post">
@@ -47,3 +49,4 @@
 </div>
 <?php } ?>
 <?php $content = ob_get_clean(); ?>
+<?php require('view/frontend/template.php'); ?>

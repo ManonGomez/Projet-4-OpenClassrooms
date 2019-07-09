@@ -16,6 +16,7 @@ class CommentsController extends MainController
         } else {
             //SI TOUT EST OK, O, REDIRIGE VERS LA PAGE DE L'ARTICLE EN QUESTION
             header('Location: index.php?action=post&id=' . $idArticle);
-        }
+        };
+         require('view/frontend/template_article.php');
     }
 }

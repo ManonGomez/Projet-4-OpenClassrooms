@@ -63,4 +63,43 @@ class AdminManager extends Manager
         $txtcomment->execute(array($IDval));
         return $txtxomment;
     }
+    
+    public  function insertArticle($titlearticle, $textarticle)
+    {
+
+        $bdd = $this->dbConnect();
+         $insertarticle = $bdd->prepare("INSERT INTO articles (titlearticle, textarticle, datearticle) VALUES (?, ?, NOW())");
+        $insertarticle->execute(array($titlearticle, $textarticle));
+        return $insertarticle;
+    }
+    
+    public function upadteArticle($titlearticle, $txt, $IDupdate){
+        $bdd = $this->dbConnect();
+        $uparticle = $bdd->prepare('UPDATE articles SET title=?, text=?, dateArticle=NOW()  WHERE Id=?');
+                $uparticle->execute(array($titlearticle, $txt, $IDupdate));
+        return $uparticle
+    }
+    
+     public  function deleteArticle($IDdelete)
+    {
+
+        $bdd = $this->dbConnect();
+         $delete = $bdd->prepare('DELETE FROM articles WHERE Id=?');
+            $delete->execute(array($IDdelete));
+        return $delete;
+    }
+    public function signalComment($IDval){
+        $bdd = $this->dbConnect();
+        $rate0 = $bdd->prepare('UPDATE comments SET rate=0 WHERE Id=?');
+            $rate0->execute(array($IDval));
+        return $rate0;
+    }
+      public function deleteCom($IDdelete){
+        $bdd = $this->dbConnect();
+                    $delete = $bdd->prepare('DELETE FROM comments WHERE Id=?');
+            $delete->execute(array($IDdelete));
+        return $delete;
+    }
 }
+
+
