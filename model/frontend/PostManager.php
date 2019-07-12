@@ -10,7 +10,8 @@ class PostManager extends Manager
         $bdd = $this->dbConnect();
         $article = $bdd->prepare("SELECT * FROM articles WHERE Id = ?");
         $article->execute(array($IDarticle));
-        return $article;
+      
+        return $article->fetch();
     }
 
     public function getArticles()

@@ -5,6 +5,8 @@
 <?php ob_start(); ?>
 <form method="post" class="connexion">
 
+    <h6 class="card-title">Connectez-vous</h6>
+    
     <div class="form-group">
         <label for="exampleFormControlInput1">Pseudo</label>
         <input class="field form-control" type="text" name="pseudo" id="pseudo" required="" autofocus="">
@@ -29,3 +31,4 @@
     ?>
 </form>
 <?php $content = ob_get_clean(); ?>
+<?php require('view/frontend/template.php'); ?>

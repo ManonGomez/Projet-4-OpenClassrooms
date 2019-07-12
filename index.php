@@ -2,12 +2,15 @@
 session_start();
 
 
-//require('controller/controller.php');
 use model\backend\Manager;
-//frontend 
 use controller\frontend\PostsController;
-use controller\frontend\CommentsController;
-use controller\backend\controller;
+use controller\frontend\CommentController;
+use controller\frontend\ContactController;
+use controller\frontend\AboutController;
+use controller\backend\UserController;
+use controller\backend\CommentGestionController;
+use controller\backend\PostController;
+
 
 require_once('SplClassLoader.php');
 $autoLoader = new SplClassLoader();
@@ -34,7 +37,7 @@ try {
                 //ON VERIFIE QUE LES CHAMPS SONT REMPLIS
                 if (!empty($_POST['pseudo']) && !empty($_POST['text'])) {
                     //ON AJOUT LE COMMENTAIRE SI TOUT EST OK
-                    $controller = new CommentsController();
+                    $controller = new CommentController();
                     $controller->addComment($_GET['id'], $_POST['pseudo'], $_POST['text']);
                 } else {
                     throw new Exception('Tous les champs ne sont pas remplis');
@@ -42,23 +45,36 @@ try {
             } else {
                 throw new Exception('Aucun identifiant de billet envoyé');
             }
-        } elseif ($_GET['action'] == 'connect') { } elseif ($_GET['action'] == 'contact') {
-            contact();
-            //fnct définie dans controller.php
+        } elseif ($_GET['action'] == 'connect') {
+            $controller = new UserController();
+            $controller->connect();
+        } elseif ($_GET['action'] == 'contact') {
+            $controller = new ContactController();
+            $controller->contact();
         } elseif ($_GET['action'] == 'admin') {
-            admin();
+            $controller = new UserController();
+            $controller->admin();
+        } elseif ($_GET['action'] == 'about') {
+            $controller = new AboutControlller();
+            $controller->admin();
         } elseif ($_GET['action'] == 'delete') {
-            delete();
+            $controller = new PostController();
+            $controller->delete();
         } elseif ($_GET['action'] == 'deletecom') {
-            deletecom();
+            $controller = new CommentGestionController();
+            $controller->deletecom();
         } elseif ($_GET['action'] == 'gestion') {
-            gestion();
+            $controller = new PostController();
+            $controller->gestion();
         } elseif ($_GET['action'] == 'gestioncom') {
-            gestioncom();
+            $controller = new CommentGestionController();
+            $controller->gestioncom();
         } elseif ($_GET['action'] == 'disconnect') {
-            disconnect();
+            $controller = new UserController();
+            $controller->disconnect();
         } elseif ($_GET['action'] == 'updatearticle') {
-            updatearticle();
+            $controller = new PostController();
+            $controller->updatearticle();
         }
     } else {
         $controller = new PostsController();

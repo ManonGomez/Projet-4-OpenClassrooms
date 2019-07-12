@@ -13,11 +13,16 @@ body {
 }
 
 .navbar-light .navbar-nav .nav-link:hover {
-    color:#7094db;
+    color: #7094db;
 }
 
+.card {
+    margin-top: 2%;
+}
 
-
+.h6, h6 {
+    font-size: 3rem;
+}
 
 
 #fixe {
@@ -76,25 +81,31 @@ form {
     margin-left: 1%;
     color: black;
 }
-.ic:hover{
+
+.ic:hover {
     color: #7094db;
 }
+
 footer {
     position: fixed;
     bottom: 0;
     background-color: #F1F1F2;
     width: 100%;
 }
-.card{
+
+.card {
     margin-bottom: 2%;
 }
-.card-header{
+
+.card-header {
     background-color: #99b3e6;
 }
-.card-header a{
+
+.card-header a {
     color: black;
 }
-.card-header a:hover{
+
+.card-header a:hover {
     color: white;
     text-decoration: none;
 }

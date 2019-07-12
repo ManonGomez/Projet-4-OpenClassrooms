@@ -26,9 +26,18 @@ class CommentManager extends Manager
       public function postComment($idArticle, $author, $comment) {
 
         $bdd = $this->dbConnect();
-        $comments = $bdd->prepare( 'INSERT INTO comments(Id, text, dateComment, pseudo, rate) VALUES(?,?,NOW(), ?,? )');
-        $affectedLines = $comments->execute(array($idArticle, $author, $comment));
+        $comments = $bdd->prepare( 'INSERT INTO comments(text, dateComment, pseudo, IdArticle) VALUES(?,NOW(), ?,?)');
+        $affectedLines = $comments->execute(array($comment, $author, $idArticle));
 
         return $affectedLines;
+    }
+    public function signalCom($rateAdd)
+    {
+
+       $bdd = $this->dbConnect();
+        //UPDATE Orders SET Quantity = Quantity + 1 WHERE ...
+         $rateCom = $bdd->prepare("UPDATE comments (rate) VALUES (+1)");
+        $rateCom->execute(array($rateAdd));
+        return $rateCom;
     }
 }
