@@ -1,4 +1,4 @@
-<?php $title = 'Votre espace'; ?>
+<?php $title = 'Rédaction'; ?>
 
 
 <?php ob_start(); ?>

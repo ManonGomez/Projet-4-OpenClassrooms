@@ -23,7 +23,9 @@ body {
 .h6, h6 {
     font-size: 3rem;
 }
-
+.cursor{
+    cursor: pointer;
+}
 
 #fixe {
 

@@ -4,7 +4,7 @@ namespace controller\frontend;
 
 use model\frontend\CommentManager;
 
-class CommentsController extends MainController
+class CommentController extends MainController
 {
 
     public function addComment($idArticle, $author, $comment)

@@ -19,6 +19,30 @@ class PostController extends MainController
         require('view/frontend/template_gestion.php');
     }
 
+    
+    
+    public function create()
+    {
+      //  if ($_SESSION['admin'] == 0) {
+           // header("Location: index.php");
+      //  }
+//faire page pour ecrire
+        if (isset($_POST['billetvalid'])) {
+            if (!empty($_POST['textarea']) and !empty($_POST['titlearea'])) {
+                $titlearticle = htmlspecialchars($_POST['titlearea']);
+                $textarticle = htmlspecialchars($_POST['textarea']);
+                $insertarticle = insertArticle($titlearticle, $textarticle);
+                // -> = pour preparer et executer la bdd
+                $message = "L'article à bien été posté";
+            } else {
+                $error = "Veuillez remplir tous les champs";
+            }
+        }
+
+        require('view/frontend/template_create.php');
+    }
+
+    
     public    function updatearticle()
     {
         $IDupdate = htmlspecialchars($_GET['id']);

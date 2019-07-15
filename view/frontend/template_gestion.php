@@ -4,15 +4,14 @@
 <?php ob_start(); ?>
 <section class="createbutton">
     <div>
-       <a href="admin.php"> <button type="button" id="topb" class="btn btn-info" >Ecrire un article</button></a>
-        <a href="gestioncom.php"><button type="button" id="topb" class="btn btn-primary">Modérer les commentaires</button></a>
+       <a href="template_create.php"> <button type="button" id="topb" class="btn btn-info" >Ecrire un article</button></a>
+        <a href="template_gestioncom.php"><button type="button" id="topb" class="btn btn-primary">Modérer les commentaires</button></a>
     </div>
 </section>
 <section class="table">
     <table class="table">
         <thead class="thead-dark">
             <tr>
-                
                 <th scope="col">Article</th>
                 <th scope="col">Lire</th>
                 <th scope="col">Modifier</th>

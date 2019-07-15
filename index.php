@@ -10,7 +10,7 @@ use controller\frontend\AboutController;
 use controller\backend\UserController;
 use controller\backend\CommentGestionController;
 use controller\backend\PostController;
-
+use controller\backend\AdminController;
 
 require_once('SplClassLoader.php');
 $autoLoader = new SplClassLoader();
@@ -52,11 +52,11 @@ try {
             $controller = new ContactController();
             $controller->contact();
         } elseif ($_GET['action'] == 'admin') {
-            $controller = new UserController();
+            $controller = new AdminController();
             $controller->admin();
         } elseif ($_GET['action'] == 'about') {
             $controller = new AboutControlller();
-            $controller->admin();
+            $controller->about();
         } elseif ($_GET['action'] == 'delete') {
             $controller = new PostController();
             $controller->delete();
@@ -75,6 +75,10 @@ try {
         } elseif ($_GET['action'] == 'updatearticle') {
             $controller = new PostController();
             $controller->updatearticle();
+        } elseif($_GET['actio,']=='create'){
+            $controller = new PostController();
+            $controller->create();
+                
         }
     } else {
         $controller = new PostsController();

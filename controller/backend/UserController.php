@@ -10,27 +10,6 @@ class UserController extends MainController
 {
 
 
-public function admin()
-    {
-      //  if ($_SESSION['admin'] == 0) {
-           // header("Location: index.php");
-      //  }
-//faire page pour ecrire
-        if (isset($_POST['billetvalid'])) {
-            if (!empty($_POST['textarea']) and !empty($_POST['titlearea'])) {
-                $titlearticle = htmlspecialchars($_POST['titlearea']);
-                $textarticle = htmlspecialchars($_POST['textarea']);
-                $insertarticle = insertArticle($titlearticle, $textarticle);
-                // -> = pour preparer et executer la bdd
-                $message = "L'article à bien été posté";
-            } else {
-                $error = "Veuillez remplir tous les champs";
-            }
-        }
-
-        require('view/frontend/template_admin.php');
-    }
-
 
     public function connect()
     {
@@ -55,7 +34,7 @@ public function admin()
                         if ($userdata['admin'] == 1) {
                             header("Location: template_admin.php");
                         } else {
-                           // header("Location: index.php");
+                            header("Location: index.php");
                         }
                     } else {
                         $error = 'Veuillez compléter tous les champs.';

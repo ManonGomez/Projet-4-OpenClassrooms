@@ -10,7 +10,6 @@
 <form method="post">
     <input type="submit" id="send" name="delete" value="Oui" class="btn btn-outline-dark">
 </form>
-
 <?php } ?>
 <?php $content = ob_get_clean(); ?>
 <?php require('view/frontend/template.php'); ?>

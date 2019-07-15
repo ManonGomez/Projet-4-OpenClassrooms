@@ -39,7 +39,6 @@
 <?php 
 ?>
 <?php while ($commentDisplay = $comments->fetch()) { ?>
-<!--$comment issu de controller fonctionne comme juste au dessus $article-->
 <div class="card text-center">
     <div class="card-body">
         <h3 class="card-title"><?= $commentDisplay['pseudo']; ?></h3>
