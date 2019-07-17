@@ -3,19 +3,19 @@
 namespace controller\backend;
 
 use model\backend\Manager;
-use model\frontend\PostManager;
 use controller\frontend\MainController;
 use model\frontend\CommentManager;
+use model\backend\PostManager;
 
 class PostController extends MainController
 {
     public  function gestion()
     {
-        $articles = getArticleBYDate();
+       // $articles = getArticleBYDate($IDdate);
 
-        if ($_SESSION['admin'] == 0) {
+       // if ($_SESSION['admin'] == 0) {
            // header("Location: index.php");
-        }
+        //}
         require('view/frontend/template_gestion.php');
     }
 
@@ -28,10 +28,10 @@ class PostController extends MainController
       //  }
 //faire page pour ecrire
         if (isset($_POST['billetvalid'])) {
-            if (!empty($_POST['textarea']) and !empty($_POST['titlearea'])) {
-                $titlearticle = htmlspecialchars($_POST['titlearea']);
-                $textarticle = htmlspecialchars($_POST['textarea']);
-                $insertarticle = insertArticle($titlearticle, $textarticle);
+            if (!empty($_POST['text']) and !empty($_POST['title'])) {
+                $titlearticle = htmlspecialchars($_POST['title']);
+                $textarticle = htmlspecialchars($_POST['text']);
+                $insertarticle = $insertarticle($titlearticle, $textarticle);
                 // -> = pour preparer et executer la bdd
                 $message = "L'article à bien été posté";
             } else {

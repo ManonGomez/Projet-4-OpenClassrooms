@@ -1,4 +1,3 @@
-
 <?php
 
 namespace controller\backend;
@@ -12,10 +11,10 @@ class CommentGestionController extends MainController
 {
     public  function gestioncom()
     {
-        if ($_SESSION['admin'] == 0) {
-            header("Location: index.php");
-        }
-        $comment = getCOMBYDate();
+      //  if ($_SESSION['admin'] == 0) {
+        //    header("Location: index.php");
+      //  }
+        $comment = new getCOMBYDate();
         require('view/frontend/template_gestioncom.php');
     }
 
@@ -39,9 +38,9 @@ class CommentGestionController extends MainController
 
     public function deletecom()
     {
-        if ($_SESSION['admin'] == 0) {
-            header("Location: index.php");
-        }
+      //  if ($_SESSION['admin'] == 0) {
+       //     header("Location: index.php");
+       // }
 
         $IDdelete = htmlspecialchars($_GET['id']);
 

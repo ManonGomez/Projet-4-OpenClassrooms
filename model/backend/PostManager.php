@@ -16,11 +16,12 @@ class PostManager extends Manager
         return $namearticle;
     }
     
-    public function getArticleBYDate()
+    public function getArticleBYDate($IDdate)
     {
 
         $bdd = $this->dbConnect();
         $articles = $bdd->query('SELECT * FROM articles ORDER BY dateArticle ASC');
+        $articles->execute(array($IDdate))
         return $articles;
     }
 
@@ -37,7 +38,7 @@ class PostManager extends Manager
     {
 
         $bdd = $this->dbConnect();
-         $insertarticle = $bdd->prepare("INSERT INTO articles (titlearticle, textarticle, datearticle) VALUES (?, ?, NOW())");
+         $insertarticle = $bdd->prepare("INSERT INTO articles (title, text, dateArticle) VALUES (?, ?, NOW())");
         $insertarticle->execute(array($titlearticle, $textarticle));
         return $insertarticle;
     }

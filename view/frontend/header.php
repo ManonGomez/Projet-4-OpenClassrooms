@@ -18,8 +18,6 @@
                     <?php
                     if (!empty($_SESSION['username']) == TRUE) {
                         echo '<li class="nav-item"><a class="nav-link" href="template_disconnect.php" class="disconnect log">Déconnexion</a></li>';
-                    }
-                        if (!empty($_SESSION['username']) == TRUE) {
                             echo '<li class="nav-item"><a class="nav-link" href="view/frontend/template_admin.php" class="gestion log">Gestion</a></li>';
                         }
                     

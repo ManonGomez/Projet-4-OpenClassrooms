@@ -16,6 +16,7 @@ class UserController extends MainController
         
             if (isset($_POST['formconnexion'])) {
                 if (!empty($_POST['pseudo']) and !empty($_POST['password'])) {
+                    $bdd->dbConnect();
                     $pseudo = htmlspecialchars($_POST['pseudo']);
                     $password = hash('sha256', $salt . $_POST['password']);
                     $requser = getUser($pseudo, $password);
