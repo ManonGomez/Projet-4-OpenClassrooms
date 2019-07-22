@@ -20,10 +20,12 @@ body {
     margin-top: 2%;
 }
 
-.h6, h6 {
+.h6,
+h6 {
     font-size: 3rem;
 }
-.cursor{
+
+.cursor {
     cursor: pointer;
 }
 
@@ -89,7 +91,6 @@ form {
 }
 
 footer {
-    position: fixed;
     bottom: 0;
     background-color: #F1F1F2;
     width: 100%;

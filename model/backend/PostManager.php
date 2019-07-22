@@ -3,7 +3,6 @@
 namespace model\backend;
 
 
-
 class PostManager extends Manager
 {
     
@@ -16,46 +15,43 @@ class PostManager extends Manager
         return $namearticle;
     }
     
-    public function getArticleBYDate($IDdate)
+    public function getArticleBYDate()
     {
-
         $bdd = $this->dbConnect();
         $articles = $bdd->query('SELECT * FROM articles ORDER BY dateArticle ASC');
-        $articles->execute(array($IDdate))
         return $articles;
     }
 
-     public function getArticleUp($IDupdate)
+    public function getArticleById($id)
     {
 
         $bdd = $this->dbConnect();
-        $articles = $bdd->prepare('SELECT title, text FROM articles WHERE Id=?');
-        $articles->execute(array($IDupdate));
+        $articles = $bdd->prepare('SELECT * FROM articles WHERE Id=?');
+        $articles->execute(array($id));
         return $articles;
     }
     
-      public  function insertArticle($titlearticle, $textarticle)
+      public  function createArticle($titlearticle, $textarticle)
     {
-
         $bdd = $this->dbConnect();
-         $insertarticle = $bdd->prepare("INSERT INTO articles (title, text, dateArticle) VALUES (?, ?, NOW())");
+        $insertarticle = $bdd->prepare("INSERT INTO articles (title, text, dateArticle) VALUES (?, ?, NOW())");
         $insertarticle->execute(array($titlearticle, $textarticle));
-        return $insertarticle;
+        return $bdd->lastInsertId();
     }
     
-    public function upadteArticle($titlearticle, $txt, $IDupdate){
+    public function upadteArticle($titlearticle, $txt, $id){
         $bdd = $this->dbConnect();
         $uparticle = $bdd->prepare('UPDATE articles SET title=?, text=?, dateArticle=NOW()  WHERE Id=?');
-                $uparticle->execute(array($titlearticle, $txt, $IDupdate));
-        return $uparticle
+        $uparticle->execute(array($titlearticle, $txt, $id));
+        return $uparticle;
     }
     
      public  function deleteArticle($IDdelete)
     {
 
         $bdd = $this->dbConnect();
-         $delete = $bdd->prepare('DELETE FROM articles WHERE Id=?');
-            $delete->execute(array($IDdelete));
+        $delete = $bdd->prepare('DELETE FROM articles WHERE Id=?');
+        $delete->execute(array($IDdelete));
         return $delete;
     }
     

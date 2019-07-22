@@ -5,7 +5,7 @@
 <?php while ($showarticle = $articles->fetch()) { ?>
 
 <h3>Modification des billets</h3>
-<form method="post" class="billetform">
+<form method="post" class="billetform" action="index.php?action=admin&page=editpost&id=<?php echo $showarticle['Id']; ?>">
     <input type="text" id="title" name="titlearea" value="<?= $showarticle['title'] ?>">
     <textarea id="mytextarea" name="textarea"><?= $showarticle['text'] ?></textarea>
     <input type="submit" id="send" name="billetup" value="Modifier">
@@ -17,9 +17,12 @@
                     ?>
 </form>
 <script>
-    tinymce.init({
-        selector: '#mytextarea'
-    });
+    window.addEventListener('load', () => {
+        tinymce.init({
+            selector: '#mytextarea'
+        });
+    })
+    
 </script>
 
 <?php } ?>

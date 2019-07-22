@@ -9,7 +9,7 @@ use controller\frontend\ContactController;
 use controller\frontend\AboutController;
 use controller\backend\UserController;
 use controller\backend\CommentGestionController;
-use controller\backend\PostController;
+use controller\backend\AdminPostController;
 use controller\backend\AdminController;
 
 require_once('SplClassLoader.php');
@@ -46,39 +46,77 @@ try {
                 throw new Exception('Aucun identifiant de billet envoyé');
             }
         } elseif ($_GET['action'] == 'connect') {
-            $controller = new UserController();
-            $controller->connect();
+
+            if (isset($_POST['formconnexion'])) {
+                if (!empty($_POST['pseudo']) and !empty($_POST['password'])) {
+
+                    $pseudo = htmlspecialchars($_POST['pseudo']);
+                    $password = $_POST['password'];
+
+                    $controller = new UserController();
+                    $controller->connect($pseudo, $password);
+                } else { }
+            } else {
+                require 'view/frontend/template_connect.php';
+            }
+        }
+        //Deconnexion
+        elseif ($_GET['action'] == 'disconnect') {
+            $userController = new UserController();
+            $userController->disconnect();
+        }
+        //on regroupe ce qui concerne l'admin dans un seul if
+        elseif ($_GET['action'] == 'admin') {
+
+            $userController = new UserController();
+            $isAdmin = $userController->isAdmin();
+            //on teste si l'utilisateur est bien connecté
+            if ($isAdmin) {
+
+                $controller = new AdminController();
+                $adminPostController = new AdminPostController();
+                //page d'accueil de l'admin
+                if ($_GET['page'] == 'dashboard') {
+                    $controller->dashboard();
+                }
+                //liste des articles dans l'admin
+                elseif ($_GET['page'] == 'listposts') {
+                    $adminPostController->adminPosts();
+                }
+                //page de creation d'un billet
+                elseif ($_GET['page'] == 'createpost') {
+                    $adminPostController->createPost();
+                }
+                //page d'édition d'un post
+                elseif ($_GET['page'] == 'editpost') {
+
+                    if (isset($_GET['id']) && $_GET['id'] > 0) {
+                        $adminPostController->updatePost($_GET['id']);
+                    } else {
+                        throw new Exception('Aucun identifiant de billet envoyé');
+                    }
+                } elseif ($_GET['page'] == 'deletepost') {
+                    $adminPostController->delete();
+                }
+                //il faut ajouter ici les autres action liées à l'admin
+
+            }
+            //sinon accès interdit
+            else {
+                throw new Exception('Accès non autorisé');
+            }
         } elseif ($_GET['action'] == 'contact') {
             $controller = new ContactController();
             $controller->contact();
-        } elseif ($_GET['action'] == 'admin') {
-            $controller = new AdminController();
-            $controller->admin();
         } elseif ($_GET['action'] == 'about') {
             $controller = new AboutControlller();
             $controller->about();
-        } elseif ($_GET['action'] == 'delete') {
-            $controller = new PostController();
-            $controller->delete();
         } elseif ($_GET['action'] == 'deletecom') {
             $controller = new CommentGestionController();
             $controller->deletecom();
-        } elseif ($_GET['action'] == 'gestion') {
-            $controller = new PostController();
-            $controller->gestion();
         } elseif ($_GET['action'] == 'gestioncom') {
             $controller = new CommentGestionController();
             $controller->gestioncom();
-        } elseif ($_GET['action'] == 'disconnect') {
-            $controller = new UserController();
-            $controller->disconnect();
-        } elseif ($_GET['action'] == 'updatearticle') {
-            $controller = new PostController();
-            $controller->updatearticle();
-        } elseif($_GET['actio,']=='create'){
-            $controller = new PostController();
-            $controller->create();
-                
         }
     } else {
         $controller = new PostsController();

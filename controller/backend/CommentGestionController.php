@@ -14,8 +14,9 @@ class CommentGestionController extends MainController
       //  if ($_SESSION['admin'] == 0) {
         //    header("Location: index.php");
       //  }
-        $comment = new getCOMBYDate();
-        require('view/frontend/template_gestioncom.php');
+        $CommentManager = new CommentManager();
+        $comment = $CommentManager->getCOMBYDate();
+        require('view/backend/template_gestioncom.php');
     }
 
     public function validcom()
@@ -23,17 +24,22 @@ class CommentGestionController extends MainController
 
         $IDval = htmlspecialchars($_GET['id']);
 
-        $txtxomment = getComByID($IDval);
+        
+        $CommentManager = new CommentManager();
+        $txtcomment = $CommentManager->getComByID($IDval);
+       
 
         if (isset($_POST['valid'])) {
-            header("Location: template_gestioncom.php");
+            header("Location:  index.php?action=admin&page=gestioncom");
         }
 
         if (isset($_POST['delete'])) {
-            $rate0 = signalComment($IDval);
-            header("Location: template_gestioncom.php");
+        $CommentManager = new CommentManager();
+        $rate0 = $CommentManager->signalComment($IDval);
+      
+            header("Location:  index.php?action=admin&page=gestioncom");
         }
-        require('view/frontend/template_validcom.php');
+        require('view/backend/template_validcom.php');
     }
 
     public function deletecom()
@@ -44,17 +50,22 @@ class CommentGestionController extends MainController
 
         $IDdelete = htmlspecialchars($_GET['id']);
 
-        $txtcomment = gettextcom($IDdelete);
+        
+        $CommentManager = new CommentManager();
+        $txtcomment = $CommentManager->gettextcom($IDdelete);
+     
 
         if (isset($_POST['valid'])) {
-            header("Location: template_gestioncom.php");
+            header(" index.php?action=admin&page=gestioncom");
         }
 
         if (isset($_POST['delete'])) {
-            $delete = deleteCom($IDdelete);
-            header("Location: template_gestioncom.php");
+             $CommentManager = new CommentManager();
+        $delete= $CommentManager->deleteCom($IDdelete);
+        
+            header("Location:  index.php?action=admin&page=gestioncom");
         }
 
-        require('view/frontend/template_deletecom.php');
+        require('view/backend/template_deletecom.php');
     }
 }

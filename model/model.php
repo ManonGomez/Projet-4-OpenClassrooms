@@ -1,13 +1,6 @@
 <?php
-    
-namespace ;
+namespace model;
 
-use model\backend\Manager;
-    
-class{
-    
-    function{
-        
-    }
-    
+class model {
+
 }
