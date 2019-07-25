@@ -91,6 +91,7 @@ form {
 }
 
 footer {
+    
     bottom: 0;
     background-color: #F1F1F2;
     width: 100%;
@@ -106,6 +107,15 @@ footer {
 
 .card-header a {
     color: black;
+}
+
+.btn-outline-dark, .write{
+    margin-top: 5%;
+}
+
+h3, h2 {
+    display: flex;
+    justify-content: center;
 }
 
 .card-header a:hover {

@@ -7,26 +7,46 @@ use model\frontend\CommentManager;
 class CommentController extends MainController
 {
 
-    public function addComment($idArticle, $author, $comment)
+    public function addComment($idArticle)
     {
-        $commentManager = new CommentManager();
-        $affectedLines = $commentManager->postComment($idArticle, $author, $comment);
+        //ON VERIFIE QUE LES CHAMPS SONT REMPLIS
+        if (!empty($_POST['pseudo']) && !empty($_POST['text'])) {
+            //ON AJOUT LE COMMENTAIRE SI TOUT EST OK
+            $author = $_POST['pseudo'];
+            $comment = htmlspecialchars($_POST['text']);
+            $commentManager = new CommentManager();
+            $affectedLines = $commentManager->postComment($idArticle, $author, $comment);
 
-        if ($affectedLines === false) {
-            throw new Exception('Impossible d\'ajpouter le commentaire');
+            if ($affectedLines === false) {
+                $_SESSION['message'] = '<div class="alert alert-danger">Impossible d\'ajouter les commentaire</div>';
+            } else {
+                //SI TOUT EST OK, O, REDIRIGE VERS LA PAGE DE L'ARTICLE EN QUESTION
+                $_SESSION['message'] = '<div class="alert alert-success">Tous les champs ne sont pas remplis</div>';
+                header('Location: index.php?action=post&id=' . $idArticle);
+            };
         } else {
-            //SI TOUT EST OK, O, REDIRIGE VERS LA PAGE DE L'ARTICLE EN QUESTION
+            //message temporaire qui sera supprimé après la redirection
+            $_SESSION['message'] = '<div class="alert alert-danger">Tous les champs ne sont pas remplis</div>';
             header('Location: index.php?action=post&id=' . $idArticle);
-        };
+        }
+        
         require('view/frontend/template_article.php');
     }
 
-    public function rateCom($rateAdd)
+    public function signalComment($idComment, $idArticle)
     {
+        
         if (isset($_POST['signalCom'])) {
-            $message = 'Le commentaire à bien été signalé';
-            //get l'id com
-            //apres update dans manger rediriger vers en questio navec l'id action=post
+            $commentManager = new CommentManager();
+            $affectedCom = $commentManager->signalCom($idComment);
+            //creation d'un message temporaire à supprimer après la redirection
+            $_SESSION['message'] = '<div class="alert alert-success">Le commentaire a bien été signalé</div>';
+            header('Location: index.php?action=post&id=' . $idArticle);
+            
+        } else {
+            //creation d'un message temporaire à supprimer après la redirection
+            $_SESSION['message'] = '<div class="alert alert-danger">Le commentaire n\'a pas pu être signalé</div>';
+            header('Location: index.php?action=post&id=' . $idArticle);
         }
     }
 }

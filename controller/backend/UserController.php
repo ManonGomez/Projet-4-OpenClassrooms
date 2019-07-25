@@ -18,32 +18,44 @@ class UserController extends MainController
         }
     }
 
-    public function connect($pseudo, $password)
+    public function connect()
     {
-        $userManager = new UserManager();
-        $requser = $userManager->getUser($pseudo, $password);
+        if (isset($_POST['formconnexion'])) {
+                if (!empty($_POST['pseudo']) and !empty($_POST['password'])) {
 
+                    $pseudo = $_POST['pseudo'];
+                    $password = $_POST['password'];
 
-        $userexist = $requser->rowCount();
-        if ($userexist == 1) {
-            $userdata = $requser->fetch();
-
-            $_SESSION['username'] =  $userdata['username'];
-            $_SESSION['firstname'] =  $userdata['firstname'];
-            $_SESSION['lastname'] =  $userdata['lastname'];
-            $_SESSION['mail'] =  $userdata['mail'];
-            $_SESSION['admin'] =  $userdata['admin'];
-
-            $message = 'Connexion établie.';
-            //faire un délai ou renvoyer vers espace membre
-            if ($userdata['admin'] == 1) {
-                header("Location:  index.php?action=admin&page=dashboard");
-            } else {
-                header("Location: index.php?action=connect");
-            }
-        } else {
-            $error = 'Veuillez compléter tous les champs.';
-            header("Location: index.php?action=connect");
+                    $userManager = new UserManager();
+                    $requser = $userManager->getUser($pseudo, $password);
+                    $userexist = $requser->rowCount();
+                    if ($userexist == 1) {
+                        $userdata = $requser->fetch();
+            
+                        $_SESSION['username'] =  $userdata['username'];
+                        $_SESSION['firstname'] =  $userdata['firstname'];
+                        $_SESSION['lastname'] =  $userdata['lastname'];
+                        $_SESSION['mail'] =  $userdata['mail'];
+                        $_SESSION['admin'] =  $userdata['admin'];
+            
+                        
+                        if ($userdata['admin'] == 1) {
+                            header("Location:  index.php?action=admin&page=dashboard");
+                        } else {
+                            header("Location:  index.php");
+                        }
+                    } else {
+                        $message = '<div class="alert alert-danger">identifiants incorrects</div>';
+                        require 'view/backend/template_connect.php';
+                    }
+                } 
+                else {
+                    $message = '<div class="alert alert-danger">identifiants incorrects</div>';
+                    require 'view/backend/template_connect.php';
+                }
+        } 
+        else {
+            require 'view/backend/template_connect.php';
         }
 
      

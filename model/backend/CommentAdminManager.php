@@ -4,7 +4,7 @@ namespace model\backend;
 
 
 
-class CommentManager extends Manager
+class CommentAdminManager extends Manager
 {
     public function gettextcom($IDdelete)
     {
@@ -29,10 +29,10 @@ class CommentManager extends Manager
         $bdd = $this->dbConnect();
         $txtcomment = $bdd->prepare('SELECT text FROM comments WHERE Id=?');
         $txtcomment->execute(array($IDval));
-        return $txtxomment;
+        return $txtcomment;
     }
 
-    public function signalComment($IDval)
+    public function validComment($IDval)
     {
         $bdd = $this->dbConnect();
         $rate0 = $bdd->prepare('UPDATE comments SET rate=0 WHERE Id=?');
@@ -45,5 +45,13 @@ class CommentManager extends Manager
         $delete = $bdd->prepare('DELETE FROM comments WHERE Id=?');
         $delete->execute(array($IDdelete));
         return $delete;
+    }
+      public  function deleteComWithArticle($IDdeleteAll)
+    {
+
+        $bdd = $this->dbConnect();
+        $deleteAllCom = $bdd->prepare('DELETE * FROM comments WHERE IdArticle=?');
+        $deleteAllCom->execute(array($IDdeleteAll));
+        return $deleteAllCom;
     }
 }

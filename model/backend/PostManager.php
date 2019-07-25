@@ -26,9 +26,9 @@ class PostManager extends Manager
     {
 
         $bdd = $this->dbConnect();
-        $articles = $bdd->prepare('SELECT * FROM articles WHERE Id=?');
-        $articles->execute(array($id));
-        return $articles;
+        $article = $bdd->prepare('SELECT * FROM articles WHERE Id=?');
+        $article->execute(array($id));
+        return $article->fetch();
     }
     
       public  function createArticle($titlearticle, $textarticle)
@@ -54,6 +54,7 @@ class PostManager extends Manager
         $delete->execute(array($IDdelete));
         return $delete;
     }
+   
     
     
     

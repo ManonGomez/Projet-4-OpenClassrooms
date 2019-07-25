@@ -2,13 +2,11 @@
 
 
 <?php ob_start(); ?>
-<h2>Bienvenue Jean</h2>
-
 <h3>Création des billets</h3>
 <form method="post" class="billetform" action="index.php?action=admin&page=createpost">
     <input type="text" id="title" name="titlearea" placeholder="Titre du billet">
     <textarea id="mytextarea" name="textarea"></textarea>
-    <input type="submit" id="send" name="billetvalid" value="Publier">
+    <input type="submit" id="send" name="billetvalid" value="Publier" class="btn btn-outline-dark write">
     <?php
 
     if (isset($error)) {

@@ -6,7 +6,7 @@
     <div>
        <a href="index.php?action=admin&page=createpost"> <button type="button" id="topb" class="btn btn-info" >Ecrire un article</button></a>
        <!-- modifier le href avec index.php etc... -->
-        <a href="template_gestioncom.php"><button type="button" id="topb" class="btn btn-primary">Modérer les commentaires</button></a>
+        <a href="index.php?action=admin&page=gestioncom"><button type="button" id="topb" class="btn btn-primary">Modérer les commentaires</button></a>
     </div>
 </section>
 <section class="table">

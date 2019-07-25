@@ -3,6 +3,7 @@ session_start();
 
 
 use model\backend\Manager;
+use controller\frontend\MainController;
 use controller\frontend\PostsController;
 use controller\frontend\CommentController;
 use controller\frontend\ContactController;
@@ -27,38 +28,43 @@ try {
                 $controller = new PostsController();
                 $controller->showPost($_GET['id']);
             } else {
-                throw new Exception('Aucun identifiant de billet envoyé');
+                $controller = new MainController();
+                $controller->notFound();
             }
-        } //AJOUT DES COMMENTAIRES 
+        }  
+        //signal commentaire rate
+        elseif ($_GET['action'] == 'signalCom'){
+            if (isset($_GET['idComment']) && $_GET['idComment'] > 0 && isset($_GET['idArticle']) && $_GET['idArticle'] > 0) {
+                $controller = new CommentController();
+                $controller->signalComment($_GET['idComment'], $_GET['idArticle']);
+            } else {
+                $controller = new MainController();
+                $controller->notFound();
+            }
+            
+        }
+        //AJOUT DES COMMENTAIRES
         elseif ($_GET['action'] == 'addComment') {
 
             //ON VERIFIE LA PRÉSENCE DE L'ID DANS L'URL
             if (isset($_GET['id']) && $_GET['id'] > 0) {
-                //ON VERIFIE QUE LES CHAMPS SONT REMPLIS
-                if (!empty($_POST['pseudo']) && !empty($_POST['text'])) {
-                    //ON AJOUT LE COMMENTAIRE SI TOUT EST OK
-                    $controller = new CommentController();
-                    $controller->addComment($_GET['id'], $_POST['pseudo'], $_POST['text']);
-                } else {
-                    throw new Exception('Tous les champs ne sont pas remplis');
-                }
+                $controller = new CommentController();
+                $controller->addComment($_GET['id']);
             } else {
-                throw new Exception('Aucun identifiant de billet envoyé');
+                $controller = new MainController();
+                $controller->notFound();
             }
-        } elseif ($_GET['action'] == 'connect') {
+        } elseif ($_GET['action'] == 'contact') {
+            $controller = new ContactController();
+            $controller->contact();
+        } elseif ($_GET['action'] == 'about') {
+            $controller = new AboutControlller();
+            $controller->about();
+        }   elseif ($_GET['action'] == 'connect') {
 
-            if (isset($_POST['formconnexion'])) {
-                if (!empty($_POST['pseudo']) and !empty($_POST['password'])) {
+            $controller = new UserController();
+            $controller->connect();
 
-                    $pseudo = htmlspecialchars($_POST['pseudo']);
-                    $password = $_POST['password'];
-
-                    $controller = new UserController();
-                    $controller->connect($pseudo, $password);
-                } else { }
-            } else {
-                require 'view/frontend/template_connect.php';
-            }
         }
         //Deconnexion
         elseif ($_GET['action'] == 'disconnect') {
@@ -75,6 +81,7 @@ try {
 
                 $controller = new AdminController();
                 $adminPostController = new AdminPostController();
+                $CommentGestionController = new CommentGestionController();
                 //page d'accueil de l'admin
                 if ($_GET['page'] == 'dashboard') {
                     $controller->dashboard();
@@ -96,32 +103,47 @@ try {
                         throw new Exception('Aucun identifiant de billet envoyé');
                     }
                 } elseif ($_GET['page'] == 'deletepost') {
-                    $adminPostController->delete();
+                    if (isset($_GET['id']) && $_GET['id'] > 0) {
+                        $adminPostController->delete($_GET['id']);
+                    } else {
+                        throw new Exception('Aucun identifiant de billet envoyé');
+                    }
                 }
                 //il faut ajouter ici les autres action liées à l'admin
 
+                elseif ($_GET['page'] == 'deletecom') {
+                    if (isset($_GET['id']) && $_GET['id'] > 0) {
+                        $CommentGestionController->deletecom($_GET['id']);
+                    } else {
+                        throw new Exception('Aucun identifiant de billet envoyé');
+                    }
+                    
+                } elseif ($_GET['page'] == 'validcom') {
+                    if (isset($_GET['id']) && $_GET['id'] > 0) {
+                        $CommentGestionController->validcom($_GET['id']);
+                    } else {
+                        throw new Exception('Aucun identifiant de billet envoyé');
+                    }
+                    
+                }elseif ($_GET['page'] == 'gestioncom') {
+    
+                    $CommentGestionController->gestioncom();
+                }
+                else {
+                    header('Location: index.php?action=admin&page=dashboard');
+                }
+                
             }
             //sinon accès interdit
             else {
-                throw new Exception('Accès non autorisé');
+                $controller = new MainController();
+                $controller->unauthorize();
             }
-        } elseif ($_GET['action'] == 'contact') {
-            $controller = new ContactController();
-            $controller->contact();
-        } elseif ($_GET['action'] == 'about') {
-            $controller = new AboutControlller();
-            $controller->about();
-        } elseif ($_GET['action'] == 'deletecom') {
-            $controller = new CommentGestionController();
-            $controller->deletecom();
-        } elseif ($_GET['action'] == 'gestioncom') {
-            $controller = new CommentGestionController();
-            $controller->gestioncom();
         }
     } else {
         $controller = new PostsController();
         $controller->index();
     }
 } catch (Exception $e) {
-    echo 'Erreur : ' . $e->getMessage();
+    echo 'Erreur : ' . $e->getCode();
 }

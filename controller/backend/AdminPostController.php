@@ -6,6 +6,7 @@ use model\backend\Manager;
 use controller\frontend\MainController;
 use model\frontend\CommentManager;
 use model\backend\PostManager;
+use model\backend\CommentAdminManager;
 
 class AdminPostController extends MainController
 {
@@ -46,7 +47,7 @@ class AdminPostController extends MainController
     public function updatePost($idPost)
     {
         $postManager = new PostManager();
-        $articles = $postManager->getArticleById($idPost);
+        $article = $postManager->getArticleById($idPost);
 
         if (isset($_POST['billetup'])) {
             if (!empty($_POST['titlearea']) and !empty($_POST['textarea'])) {
@@ -67,19 +68,27 @@ class AdminPostController extends MainController
     public function delete($idPost)
     {
         $postManager = new PostManager();
-        $IDdelete = htmlspecialchars($_GET['id']);
+        $CommentAdminManager = new CommentAdminManager;
+        $article = $postManager->getArticleById($idPost);
+
+        if ( !$article ) {
+            throw new \Exception('Ce billet n\'existe pas');
+        }
+        
         //et supprimer les comm qui vont avec les artcilesen utilisant la jonction
         if ($_SESSION['admin'] == 0) {
             header("Location: index.php");
         }
 
         if (isset($_POST['valid'])) {
-            header("Location:  index.php?action=admin&page=listposts");
+            header("Location: index.php?action=admin&page=listposts");
         }
 
         if (isset($_POST['delete'])) {
             $delete = $postManager->deleteArticle($idPost);
-            header("Location:  index.php?action=admin&page=listposts");
+            $deleteAllCom =$CommentAdminManager->deleteComWithArticle($IDdeleteAll);
+                  
+            header("Location: index.php?action=admin&page=listposts");
         }
 
         require('view/backend/template_delete.php');

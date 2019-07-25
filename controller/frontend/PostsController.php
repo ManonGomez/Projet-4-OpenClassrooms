@@ -21,15 +21,21 @@ class PostsController extends MainController
     {
         $postManager = new PostManager();
         $commentManager = new CommentManager();
-
+        $message = '';
+        
         $article = $postManager->getArticle($idPost);
         $comments = $commentManager->getComments($idPost);
+        //on verifie la présence ou non d'un message temporaire et on le supprime ensuite
+        if (isset($_SESSION['message'])) {
+            $message = $_SESSION['message'];
+            unset($_SESSION['message']);
+        }
         //on test si l'article a bien été trouvé en base
         // si non, on revoi une erreur
         if ($article) {
             require('view/frontend/template_article.php');
         } else {
-            throw new \Exception('Ce billet n\'existe pas');
+            $this->notFound();
         }
     }
 
@@ -75,10 +81,7 @@ class PostsController extends MainController
                 } else {
                     $error = 'Veuillez compléter tous les champs';
                 }
-            } else {
-                $display = "display:none;";
-                $error = 'pour laisser un commentaire, connectez-vous ou inscrivez-vous';
-            }
+            } 
         }
 
 

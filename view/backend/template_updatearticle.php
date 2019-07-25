@@ -2,19 +2,17 @@
 
 
 <?php ob_start(); ?>
-<?php while ($showarticle = $articles->fetch()) { ?>
 
 <h3>Modification des billets</h3>
-<form method="post" class="billetform" action="index.php?action=admin&page=editpost&id=<?php echo $showarticle['Id']; ?>">
-    <input type="text" id="title" name="titlearea" value="<?= $showarticle['title'] ?>">
-    <textarea id="mytextarea" name="textarea"><?= $showarticle['text'] ?></textarea>
-    <input type="submit" id="send" name="billetup" value="Modifier">
-     <?php
-
+<form method="post" class="billetform" action="index.php?action=admin&page=editpost&id=<?php echo $article['Id']; ?>">
+    <input type="text" id="title" name="titlearea" value="<?= $article['title'] ?>">
+    <textarea id="mytextarea" name="textarea"><?= $article['text'] ?></textarea>
+    <input type="submit" id="send" name="billetup" value="Modifier" class="btn btn-outline-dark write">
+    <?php
         if (isset($error)) {
             echo '<p>' . $error . '</p>';
         }
-                    ?>
+    ?>
 </form>
 <script>
     window.addEventListener('load', () => {
@@ -25,6 +23,5 @@
     
 </script>
 
-<?php } ?>
 <?php $content = ob_get_clean(); ?>
 <?php require('view/frontend/template.php'); ?>

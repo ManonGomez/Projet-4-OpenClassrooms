@@ -14,7 +14,7 @@
 
     <div class="form-group">
         <label for="exampleFormControlInput1"></label>
-        <input class="field form-control" type="text" name="pseudo" id="pseudo" required="" autofocus="" placeholder="Pseudo" value="">
+        <input class="field form-control" type="text" name="pseudo" id="pseudo"  placeholder="Pseudo" value="">
     </div>
 
     <div class="form-group">
@@ -26,30 +26,23 @@
 
     <?php
 
-    if (isset($error)) {
-        echo '<p>' . $error . '</p>';
-    }
     if (isset($message)) {
-        echo '<p>' . $message . '<p>';
+        echo $message;
     }
 
     ?>
 
 </form>
-<?php 
-?>
+
+
 <?php while ($commentDisplay = $comments->fetch()) { ?>
 <div class="card text-center">
     <div class="card-body">
-        <h3 class="card-title"><?= $commentDisplay['pseudo']; ?></h3>
-        <p class="card-text"><?= $commentDisplay['text'] ?></p>
+        <h3 class="card-title"><?= htmlspecialchars($commentDisplay['pseudo']); ?></h3>
+        <p class="card-text"><?= htmlspecialchars($commentDisplay['text']) ?></p>
         <p class="card-text"><?= $commentDisplay['dateComment'] ?></p>
-        <form method="post" action="index.php?action=signalCom&id=<?php echo $commentDisplay['Id']?>&<?php echo $article['Id']?>">
+        <form method="post" action="index.php?action=signalCom&idComment=<?php echo $commentDisplay['Id']?>&idArticle=<?php echo $article['Id']?>">
             <input type="submit" class="btn btn-danger" value="Signaler" name="signalCom">
-            <?php  if (isset($message)) {
-        echo '<p>' . $message . '<p>';
-    }
-?>
         </form>
     </div>
 </div>

@@ -6,6 +6,7 @@ use model\backend\Manager;
 use model\frontend\PostManager;
 use controller\frontend\MainController;
 use model\frontend\CommentManager;
+use model\backend\CommentAdminManager;
 
 class CommentGestionController extends MainController
 {
@@ -14,19 +15,16 @@ class CommentGestionController extends MainController
       //  if ($_SESSION['admin'] == 0) {
         //    header("Location: index.php");
       //  }
-        $CommentManager = new CommentManager();
-        $comment = $CommentManager->getCOMBYDate();
+        $CommentAdminManager = new CommentAdminManager();
+        $comments = $CommentAdminManager->getCOMBYDate();
         require('view/backend/template_gestioncom.php');
     }
 
-    public function validcom()
+    public function validcom($idComment)
     {
 
-        $IDval = htmlspecialchars($_GET['id']);
-
-        
-        $CommentManager = new CommentManager();
-        $txtcomment = $CommentManager->getComByID($IDval);
+        $CommentAdminManager = new CommentAdminManager();
+        $txtcomment = $CommentAdminManager->getComByID($idComment);
        
 
         if (isset($_POST['valid'])) {
@@ -34,35 +32,34 @@ class CommentGestionController extends MainController
         }
 
         if (isset($_POST['delete'])) {
-        $CommentManager = new CommentManager();
-        $rate0 = $CommentManager->signalComment($IDval);
-      
+            $CommentAdminManager = new CommentAdminManager();
+            $rate0 = $CommentAdminManager->validComment($idComment);
+        
             header("Location:  index.php?action=admin&page=gestioncom");
         }
         require('view/backend/template_validcom.php');
     }
 
-    public function deletecom()
+    public function deletecom($idComment)
     {
       //  if ($_SESSION['admin'] == 0) {
        //     header("Location: index.php");
        // }
 
-        $IDdelete = htmlspecialchars($_GET['id']);
-
         
-        $CommentManager = new CommentManager();
-        $txtcomment = $CommentManager->gettextcom($IDdelete);
+        $CommentAdminManager = new CommentAdminManager();
+        $txtcomment = $CommentAdminManager->gettextcom($idComment);
      
 
         if (isset($_POST['valid'])) {
-            header(" index.php?action=admin&page=gestioncom");
+            header("Location:  index.php?action=admin&page=gestioncom");
         }
 
         if (isset($_POST['delete'])) {
-             $CommentManager = new CommentManager();
-        $delete= $CommentManager->deleteCom($IDdelete);
-        
+            var_dump('dddd');
+            $CommentAdminManager = new CommentAdminManager();
+            
+            $delete= $CommentAdminManager->deleteCom($idComment);
             header("Location:  index.php?action=admin&page=gestioncom");
         }
 

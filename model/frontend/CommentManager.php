@@ -31,13 +31,12 @@ class CommentManager extends Manager
 
         return $affectedLines;
     }
-    public function signalCom($rateAdd)
+    public function signalCom($idComment)
     {
-
-       $bdd = $this->dbConnect();
+        $bdd = $this->dbConnect();
         //UPDATE Orders SET Quantity = Quantity + 1 WHERE ...
-         $rateCom = $bdd->prepare("UPDATE comments (rate) VALUES (+1)");
-        $rateCom->execute(array($rateAdd));
+        $rateCom = $bdd->prepare("UPDATE comments SET rate = rate + 1 WHERE Id=?");
+        $rateCom->execute(array($idComment));
         return $rateCom;
     }
 }

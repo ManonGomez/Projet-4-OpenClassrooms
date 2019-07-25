@@ -11,11 +11,11 @@
             </tr>
         </thead>
         <tbody>
-            <?php while ($showcom = $comment->fetch()) { ?>
+            <?php while ($showcom = $comments->fetch()) { ?>
             <tr>
-                <th scope="row"><a href="article.php?id=<?= $showcom['Id'] ?>"><?= $showcom['text'] ?></a></th>
-                <td><a href="validcom.php?id=<?= $showcom['IDcomment'] ?>"><button type="button" class="btn btn-success"><i class="fas fa-check"></i></button></a></td>
-                 <td><a href="deletecom.php?id=<?= $showcom['Id'] ?>"><button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></a></td>
+                <td scope="row"><a href="index.php?action=post&id=<?= $showcom['IdArticle'] ?>"><?= htmlspecialchars($showcom['text']); ?></a></td>
+                <td><a href="index.php?action=admin&page=validcom&id=<?= $showcom['Id']?>"><button type="button" class="btn btn-success"><i class="fas fa-check"></i></button></a></td>
+                 <td><a href="index.php?action=admin&page=deletecom&id=<?= $showcom['Id']?>"><button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></a></td>
             </tr>
              <?php } ?>
         </tbody>
