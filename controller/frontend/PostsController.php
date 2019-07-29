@@ -2,8 +2,8 @@
 
 namespace controller\frontend;
 
-use model\frontend\PostManager;
-use model\frontend\CommentManager;
+use model\frontend\PostsManager;
+use model\frontend\CommentsManager;
 
 
 class PostsController extends MainController
@@ -11,7 +11,7 @@ class PostsController extends MainController
 
     public function index()
     {
-        $postManager = new PostManager();
+        $postManager = new PostsManager();
         $articles = $postManager->getArticles();
 
         require('view/frontend/template_index.php');
@@ -19,8 +19,8 @@ class PostsController extends MainController
 
     public function showPost($idPost)
     {
-        $postManager = new PostManager();
-        $commentManager = new CommentManager();
+        $postManager = new PostsManager();
+        $commentManager = new CommentsManager();
         $message = '';
         
         $article = $postManager->getArticle($idPost);
@@ -42,7 +42,7 @@ class PostsController extends MainController
 
     public function listPosts()
     {
-        $postManager = new PostManager();
+        $postManager = new PostsManager();
         //print_r($postManager); 
         $articles = $postManager->getArticles();
         require('view/frontend/template_index.php');
@@ -53,7 +53,7 @@ class PostsController extends MainController
 
     public function Post()
     {
-        $postManager = new PostManager();
+        $postManager = new PostsManager();
 
         $IDarticle = $_GET['id'];
         $article = $postManager->getArticle($IDarticle);

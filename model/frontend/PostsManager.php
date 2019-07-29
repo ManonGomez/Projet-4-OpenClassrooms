@@ -2,7 +2,7 @@
 namespace model\frontend;
 
 
-class PostManager extends Manager
+class PostsManager extends Manager
 {
 
     public function getArticle($IDarticle)

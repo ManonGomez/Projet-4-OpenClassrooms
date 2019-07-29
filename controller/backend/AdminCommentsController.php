@@ -3,28 +3,28 @@
 namespace controller\backend;
 
 use model\backend\Manager;
-use model\frontend\PostManager;
+use model\frontend\PostsManager;
 use controller\frontend\MainController;
-use model\frontend\CommentManager;
-use model\backend\CommentAdminManager;
+use model\frontend\CommentsManager;
+use model\backend\AdminCommentsManager;
 
-class CommentGestionController extends MainController
+class AdminCommentsController extends MainController
 {
     public  function gestioncom()
     {
       //  if ($_SESSION['admin'] == 0) {
         //    header("Location: index.php");
       //  }
-        $CommentAdminManager = new CommentAdminManager();
-        $comments = $CommentAdminManager->getCOMBYDate();
+        $AdminCommentsManager = new AdminCommentsManager();
+        $comments = $AdminCommentsManager->getCOMBYDate();
         require('view/backend/template_gestioncom.php');
     }
 
     public function validcom($idComment)
     {
 
-        $CommentAdminManager = new CommentAdminManager();
-        $txtcomment = $CommentAdminManager->getComByID($idComment);
+        $AdminCommentsManager = new AdminCommentsManager();
+        $txtcomment = $AdminCommentsManager->getComByID($idComment);
        
 
         if (isset($_POST['valid'])) {
@@ -32,8 +32,8 @@ class CommentGestionController extends MainController
         }
 
         if (isset($_POST['delete'])) {
-            $CommentAdminManager = new CommentAdminManager();
-            $rate0 = $CommentAdminManager->validComment($idComment);
+            $AdminCommentsManager = new AdminCommentsManager();
+            $rate0 = $AdminCommentsManager->validComment($idComment);
         
             header("Location:  index.php?action=admin&page=gestioncom");
         }
@@ -47,8 +47,8 @@ class CommentGestionController extends MainController
        // }
 
         
-        $CommentAdminManager = new CommentAdminManager();
-        $txtcomment = $CommentAdminManager->gettextcom($idComment);
+        $AdminCommentsManager = new AdminCommentsManager();
+        $txtcomment = $AdminCommentsManager->gettextcom($idComment);
      
 
         if (isset($_POST['valid'])) {
@@ -57,9 +57,9 @@ class CommentGestionController extends MainController
 
         if (isset($_POST['delete'])) {
             var_dump('dddd');
-            $CommentAdminManager = new CommentAdminManager();
+            $AdminCommentsManager = new AdminCommentsManager();
             
-            $delete= $CommentAdminManager->deleteCom($idComment);
+            $delete= $AdminCommentsManager->deleteCom($idComment);
             header("Location:  index.php?action=admin&page=gestioncom");
         }
 

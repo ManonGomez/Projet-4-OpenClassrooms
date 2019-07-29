@@ -4,7 +4,7 @@ namespace model\backend;
 
 
 
-class CommentAdminManager extends Manager
+class AdminCommentsManager extends Manager
 {
     public function gettextcom($IDdelete)
     {
@@ -50,7 +50,7 @@ class CommentAdminManager extends Manager
     {
 
         $bdd = $this->dbConnect();
-        $deleteAllCom = $bdd->prepare('DELETE * FROM comments WHERE IdArticle=?');
+        $deleteAllCom = $bdd->prepare('DELETE FROM comments WHERE IdArticle=?');
         $deleteAllCom->execute(array($IDdeleteAll));
         return $deleteAllCom;
     }

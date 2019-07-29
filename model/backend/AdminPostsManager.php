@@ -3,7 +3,7 @@
 namespace model\backend;
 
 
-class PostManager extends Manager
+class AdminPostsManager extends Manager
 {
     
     public function getNameArticle($IDdelete)

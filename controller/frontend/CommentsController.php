@@ -2,9 +2,9 @@
 
 namespace controller\frontend;
 
-use model\frontend\CommentManager;
+use model\frontend\CommentsManager;
 
-class CommentController extends MainController
+class CommentsController extends MainController
 {
 
     public function addComment($idArticle)
@@ -14,7 +14,7 @@ class CommentController extends MainController
             //ON AJOUT LE COMMENTAIRE SI TOUT EST OK
             $author = $_POST['pseudo'];
             $comment = htmlspecialchars($_POST['text']);
-            $commentManager = new CommentManager();
+            $commentManager = new CommentsManager();
             $affectedLines = $commentManager->postComment($idArticle, $author, $comment);
 
             if ($affectedLines === false) {
@@ -37,7 +37,7 @@ class CommentController extends MainController
     {
         
         if (isset($_POST['signalCom'])) {
-            $commentManager = new CommentManager();
+            $commentManager = new CommentsManager();
             $affectedCom = $commentManager->signalCom($idComment);
             //creation d'un message temporaire à supprimer après la redirection
             $_SESSION['message'] = '<div class="alert alert-success">Le commentaire a bien été signalé</div>';

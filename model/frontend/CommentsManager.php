@@ -3,7 +3,7 @@ namespace model\frontend;
 
 
 
-class CommentManager extends Manager
+class CommentsManager extends Manager
 {
 
     public function getComments($IDarticle)

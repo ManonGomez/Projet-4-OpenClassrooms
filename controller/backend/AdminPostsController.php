@@ -1,20 +1,19 @@
 <?php
-//ajouter création des billets et espace admin deux boutons qui redirigent vers ou articles ou comm
 namespace controller\backend;
 
 use model\backend\Manager;
 use controller\frontend\MainController;
-use model\frontend\CommentManager;
-use model\backend\PostManager;
-use model\backend\CommentAdminManager;
+use model\frontend\CommentsManager;
+use model\backend\AdminPostsManager;
+use model\backend\AdminCommentsManager;
 
-class AdminPostController extends MainController
+class AdminPostsController extends MainController
 {
     public  function adminPosts()
     {
 
-        $postManager = new PostManager();
-        $articles = $postManager->getArticleBYDate();
+        $postsManager = new AdminPostsManager();
+        $articles = $postsManager->getArticleBYDate();
 
         require('view/backend/template_gestion.php');
     }
@@ -23,7 +22,7 @@ class AdminPostController extends MainController
     
     public function createPost()
     {
-        $postManager = new PostManager();
+        $postsManager = new AdminPostsManager();
 
         //faire page pour ecrire
         if (isset($_POST['billetvalid'])) {
@@ -31,7 +30,7 @@ class AdminPostController extends MainController
                 $titlearticle = htmlspecialchars($_POST['titlearea']);
                 $textarticle = htmlspecialchars($_POST['textarea']);
 
-                $insertarticle = $postManager->createArticle($titlearticle, $textarticle);
+                $insertarticle = $postsManager->createArticle($titlearticle, $textarticle);
                 // -> = pour preparer et executer la bdd
                 $message = "L'article à bien été posté";
                 header("Location:  index.php?action=admin&page=listposts&page=editpost&id=".$insertarticle);
@@ -46,15 +45,15 @@ class AdminPostController extends MainController
     
     public function updatePost($idPost)
     {
-        $postManager = new PostManager();
-        $article = $postManager->getArticleById($idPost);
+        $postsManager = new AdminPostsManager();
+        $article = $postsManager->getArticleById($idPost);
 
         if (isset($_POST['billetup'])) {
             if (!empty($_POST['titlearea']) and !empty($_POST['textarea'])) {
                 $titlearticle = htmlspecialchars($_POST['titlearea']);
                 $txt = htmlspecialchars($_POST['textarea']);
 
-                $uparticle = $postManager->upadteArticle($titlearticle, $txt, $idPost);
+                $uparticle = $postsManager->upadteArticle($titlearticle, $txt, $idPost);
                 header("Location:  index.php?action=admin&page=listposts&page=editpost&id=".$idPost);
             } else {
                 $error = 'Veuillez remplir tous les champs';
@@ -67,9 +66,9 @@ class AdminPostController extends MainController
 
     public function delete($idPost)
     {
-        $postManager = new PostManager();
-        $CommentAdminManager = new CommentAdminManager;
-        $article = $postManager->getArticleById($idPost);
+        $postsManager = new AdminPostsManager();
+        $AdminCommentsManager = new AdminCommentsManager;
+        $article = $postsManager->getArticleById($idPost);
 
         if ( !$article ) {
             throw new \Exception('Ce billet n\'existe pas');
@@ -85,8 +84,8 @@ class AdminPostController extends MainController
         }
 
         if (isset($_POST['delete'])) {
-            $delete = $postManager->deleteArticle($idPost);
-            $deleteAllCom =$CommentAdminManager->deleteComWithArticle($IDdeleteAll);
+            $delete = $postsManager->deleteArticle($idPost);
+            $deleteAllCom =$AdminCommentsManager->deleteComWithArticle($IDdeleteAll);
                   
             header("Location: index.php?action=admin&page=listposts");
         }

@@ -3,7 +3,7 @@
 namespace model\backend;
 
 
-class UserManager extends Manager
+class AdminUserManager extends Manager
 {
     //from connect.php
     public function getUser($pseudo, $password)

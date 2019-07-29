@@ -2,12 +2,12 @@
 namespace controller\backend;
 
 use model\backend\Manager;
-use model\frontend\PostManager;
+use model\frontend\PostsManager;
 use controller\frontend\MainController;
-use model\frontend\CommentManager;
-use model\backend\UserManager;
+use model\frontend\CommentsManager;
+use model\backend\AdminUserManager;
 
-class UserController extends MainController
+class AdminUserController extends MainController
 {
     public function isAdmin(){
         if ( isset($_SESSION['admin']) AND $_SESSION['admin'] == 1 ) {
@@ -26,7 +26,7 @@ class UserController extends MainController
                     $pseudo = $_POST['pseudo'];
                     $password = $_POST['password'];
 
-                    $userManager = new UserManager();
+                    $userManager = new AdminUserManager();
                     $requser = $userManager->getUser($pseudo, $password);
                     $userexist = $requser->rowCount();
                     if ($userexist == 1) {
