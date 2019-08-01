@@ -9,28 +9,22 @@ use model\frontend\CommentsManager;
 class PostsController extends MainController
 {
 
-    public function index()
-    {
-        $postManager = new PostsManager();
-        $articles = $postManager->getArticles();
 
-        require('view/frontend/template_index.php');
-    }
 
     public function showPost($idPost)
     {
         $postManager = new PostsManager();
         $commentManager = new CommentsManager();
         $message = '';
-        
+
         $article = $postManager->getArticle($idPost);
         $comments = $commentManager->getComments($idPost);
-        //on verifie la présence ou non d'un message temporaire et on le supprime ensuite
+        //verifie la présence ou non d'un message temporaire et on le supprime ensuite
         if (isset($_SESSION['message'])) {
             $message = $_SESSION['message'];
             unset($_SESSION['message']);
         }
-        //on test si l'article a bien été trouvé en base
+        //test si l'article a bien été trouvé en base
         // si non, on revoi une erreur
         if ($article) {
             require('view/frontend/template_article.php');
@@ -43,11 +37,10 @@ class PostsController extends MainController
     public function listPosts()
     {
         $postManager = new PostsManager();
-        //print_r($postManager); 
         $articles = $postManager->getArticles();
         require('view/frontend/template_index.php');
     }
-    //}
+
 
 
 
@@ -61,9 +54,7 @@ class PostsController extends MainController
 
         if ($_SESSION['admin'] == 0) {
             if (isset($_POST['formcomment'])) {
-                //$pseudocomment = htmlspecialchars($_SESSION['username']);
                 $textcomment = htmlspecialchars($_POST['message']);
-                //!empty($pseudocomment)and
                 if (!empty($textcomment)) {
 
                     $textcommentlenght = strlen($textcomment);
@@ -81,7 +72,7 @@ class PostsController extends MainController
                 } else {
                     $error = 'Veuillez compléter tous les champs';
                 }
-            } 
+            }
         }
 
 

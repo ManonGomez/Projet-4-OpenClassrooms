@@ -12,9 +12,7 @@ class AdminCommentsController extends MainController
 {
     public  function gestioncom()
     {
-      //  if ($_SESSION['admin'] == 0) {
-        //    header("Location: index.php");
-      //  }
+
         $AdminCommentsManager = new AdminCommentsManager();
         $comments = $AdminCommentsManager->getCOMBYDate();
         require('view/backend/template_gestioncom.php');
@@ -25,7 +23,7 @@ class AdminCommentsController extends MainController
 
         $AdminCommentsManager = new AdminCommentsManager();
         $txtcomment = $AdminCommentsManager->getComByID($idComment);
-       
+
 
         if (isset($_POST['valid'])) {
             header("Location:  index.php?action=admin&page=gestioncom");
@@ -34,7 +32,7 @@ class AdminCommentsController extends MainController
         if (isset($_POST['delete'])) {
             $AdminCommentsManager = new AdminCommentsManager();
             $rate0 = $AdminCommentsManager->validComment($idComment);
-        
+
             header("Location:  index.php?action=admin&page=gestioncom");
         }
         require('view/backend/template_validcom.php');
@@ -42,14 +40,10 @@ class AdminCommentsController extends MainController
 
     public function deletecom($idComment)
     {
-      //  if ($_SESSION['admin'] == 0) {
-       //     header("Location: index.php");
-       // }
 
-        
         $AdminCommentsManager = new AdminCommentsManager();
         $txtcomment = $AdminCommentsManager->gettextcom($idComment);
-     
+
 
         if (isset($_POST['valid'])) {
             header("Location:  index.php?action=admin&page=gestioncom");
@@ -58,8 +52,8 @@ class AdminCommentsController extends MainController
         if (isset($_POST['delete'])) {
             var_dump('dddd');
             $AdminCommentsManager = new AdminCommentsManager();
-            
-            $delete= $AdminCommentsManager->deleteCom($idComment);
+
+            $delete = $AdminCommentsManager->deleteCom($idComment);
             header("Location:  index.php?action=admin&page=gestioncom");
         }
 

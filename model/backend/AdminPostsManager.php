@@ -5,7 +5,7 @@ namespace model\backend;
 
 class AdminPostsManager extends Manager
 {
-    
+
     public function getNameArticle($IDdelete)
     {
 
@@ -14,7 +14,7 @@ class AdminPostsManager extends Manager
         $namearticle->execute(array($IDdelete));
         return $namearticle;
     }
-    
+
     public function getArticleBYDate()
     {
         $bdd = $this->dbConnect();
@@ -30,23 +30,24 @@ class AdminPostsManager extends Manager
         $article->execute(array($id));
         return $article->fetch();
     }
-    
-      public  function createArticle($titlearticle, $textarticle)
+
+    public  function createArticle($titlearticle, $textarticle)
     {
         $bdd = $this->dbConnect();
         $insertarticle = $bdd->prepare("INSERT INTO articles (title, text, dateArticle) VALUES (?, ?, NOW())");
         $insertarticle->execute(array($titlearticle, $textarticle));
         return $bdd->lastInsertId();
     }
-    
-    public function upadteArticle($titlearticle, $txt, $id){
+
+    public function upadteArticle($titlearticle, $txt, $id)
+    {
         $bdd = $this->dbConnect();
         $uparticle = $bdd->prepare('UPDATE articles SET title=?, text=?, dateArticle=NOW()  WHERE Id=?');
         $uparticle->execute(array($titlearticle, $txt, $id));
         return $uparticle;
     }
-    
-     public  function deleteArticle($IDdelete)
+
+    public  function deleteArticle($IDdelete)
     {
 
         $bdd = $this->dbConnect();
@@ -54,8 +55,4 @@ class AdminPostsManager extends Manager
         $delete->execute(array($IDdelete));
         return $delete;
     }
-   
-    
-    
-    
 }

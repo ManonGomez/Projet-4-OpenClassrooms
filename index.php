@@ -21,19 +21,20 @@ try {
     if (isset($_GET['action'])) {
         if ($_GET['action'] == 'listPosts') {
             //appel du bon controller qui permet de gérer la homepage et la liste des posts
-            $controller = new PostsController();
+            $controller = new MainController();
             $controller->index();
         } elseif ($_GET['action'] == 'post') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 $controller = new PostsController();
                 $controller->showPost($_GET['id']);
             } else {
+                //page d'erreur si l'actionn'hésite pas ou est incorrecte
                 $controller = new MainController();
                 $controller->notFound();
             }
-        }  
-        //signal commentaire rate
-        elseif ($_GET['action'] == 'signalCom'){
+        }
+        //signalement des commentaires & affichage dans la modération admin
+        elseif ($_GET['action'] == 'signalCom') {
             if (isset($_GET['idComment']) && $_GET['idComment'] > 0 && isset($_GET['idArticle']) && $_GET['idArticle'] > 0) {
                 $controller = new CommentsController();
                 $controller->signalComment($_GET['idComment'], $_GET['idArticle']);
@@ -41,12 +42,11 @@ try {
                 $controller = new MainController();
                 $controller->notFound();
             }
-            
         }
-        //AJOUT DES COMMENTAIRES
+        //ajout de commentaires
         elseif ($_GET['action'] == 'addComment') {
 
-            //ON VERIFIE LA PRÉSENCE DE L'ID DANS L'URL
+            //on vérifie la présence del'id dans l'url
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 $controller = new CommentsController();
                 $controller->addComment($_GET['id']);
@@ -58,20 +58,17 @@ try {
             $controller = new ContactController();
             $controller->contact();
         } elseif ($_GET['action'] == 'about') {
-            $controller = new AboutControlller();
+            $controller = new AboutController();
             $controller->about();
-        }   elseif ($_GET['action'] == 'connect') {
+        } elseif ($_GET['action'] == 'connect') {
 
             $controller = new AdminUserController();
             $controller->connect();
-
-        }
-        //Deconnexion
-        elseif ($_GET['action'] == 'disconnect') {
+        } elseif ($_GET['action'] == 'disconnect') {
             $AdminUserController = new AdminUserController();
             $AdminUserController->disconnect();
         }
-        //on regroupe ce qui concerne l'admin dans un seul if
+        //boucle if pour tout ce qui concerne l'admin
         elseif ($_GET['action'] == 'admin') {
 
             $AdminUserController = new AdminUserController();
@@ -109,39 +106,39 @@ try {
                         throw new Exception('Aucun identifiant de billet envoyé');
                     }
                 }
-                //il faut ajouter ici les autres action liées à l'admin
-
+                //page de suppression d'un commentaire
                 elseif ($_GET['page'] == 'deletecom') {
                     if (isset($_GET['id']) && $_GET['id'] > 0) {
                         $AdminCommentsController->deletecom($_GET['id']);
                     } else {
                         throw new Exception('Aucun identifiant de billet envoyé');
                     }
-                    
+                    //suppression du signalement d'un commentaire  
                 } elseif ($_GET['page'] == 'validcom') {
                     if (isset($_GET['id']) && $_GET['id'] > 0) {
                         $AdminCommentsController->validcom($_GET['id']);
                     } else {
                         throw new Exception('Aucun identifiant de billet envoyé');
                     }
-                    
-                }elseif ($_GET['page'] == 'gestioncom') {
-    
+                    //liste de tous les commentaires àmodérer   
+                } elseif ($_GET['page'] == 'gestioncom') {
+
                     $AdminCommentsController->gestioncom();
-                }
-                else {
+                } else {
                     header('Location: index.php?action=admin&page=dashboard');
                 }
-                
             }
             //sinon accès interdit
             else {
                 $controller = new MainController();
                 $controller->unauthorize();
             }
+        } else {
+            $controller = new MainController();
+            $controller->notFound();
         }
     } else {
-        $controller = new PostsController();
+        $controller = new MainController();
         $controller->index();
     }
 } catch (Exception $e) {

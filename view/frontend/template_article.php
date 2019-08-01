@@ -38,6 +38,7 @@
 <?php while ($commentDisplay = $comments->fetch()) { ?>
 <div class="card text-center">
     <div class="card-body">
+    <!--htmlspecialchars convertit les caractères spéciaux en entités HTML=code sécurisé-->
         <h3 class="card-title"><?= htmlspecialchars($commentDisplay['pseudo']); ?></h3>
         <p class="card-text"><?= htmlspecialchars($commentDisplay['text']) ?></p>
         <p class="card-text"><?= $commentDisplay['dateComment'] ?></p>

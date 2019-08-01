@@ -18,6 +18,7 @@
 
     ?>
 </form>
+<!--zone de texte avec l'api tinymce-->
 <script>
     window.addEventListener('load', () => {
         tinymce.init({

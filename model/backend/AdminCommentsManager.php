@@ -19,6 +19,7 @@ class AdminCommentsManager extends Manager
     {
 
         $bdd = $this->dbConnect();
+        //desc = ordre décroissant
         $comment = $bdd->query('SELECT * FROM comments WHERE rate >0 ORDER BY rate DESC');
         return $comment;
     }
@@ -46,12 +47,12 @@ class AdminCommentsManager extends Manager
         $delete->execute(array($IDdelete));
         return $delete;
     }
-      public  function deleteComWithArticle($IDdeleteAll)
+    public  function deleteComWithArticle($IdArticle)
     {
 
         $bdd = $this->dbConnect();
         $deleteAllCom = $bdd->prepare('DELETE FROM comments WHERE IdArticle=?');
-        $deleteAllCom->execute(array($IDdeleteAll));
+        $deleteAllCom->execute(array($IdArticle));
         return $deleteAllCom;
     }
 }

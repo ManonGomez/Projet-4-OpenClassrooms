@@ -9,7 +9,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="about.php">About</a>
+                        <a class="nav-link" href="index.php?action=about">About</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="index.php?action=contact">Contact</a>
@@ -17,8 +17,8 @@
 
                     <?php
                     if (!empty($_SESSION['username']) == TRUE) {
-                        echo '<li class="nav-item"><a class="nav-link" href="index.php?action=disconnect" class="disconnect log">Déconnexion</a></li>';
                             echo '<li class="nav-item"><a class="nav-link" href="index.php?action=admin&page=dashboard" class="gestion log">Gestion</a></li>';
+                            echo '<li class="nav-item"><a class="nav-link" href="index.php?action=disconnect" class="disconnect log">Déconnexion</a></li>';
                         }
                     
                     ?>

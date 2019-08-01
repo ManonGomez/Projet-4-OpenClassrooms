@@ -7,7 +7,6 @@
 
         <?php while ($showarticles = $articles->fetch()) { ?>
            <div class="card">
-                <!--  = apres ? permet de reprendre le php dans une boucle dit au code je remet du php qui appartient à la boule précedente ID créer-->
                 <div class="card-header">
                 <h2><a href="index.php?action=post&id=<?= $showarticles['Id'] ?>"><?= htmlspecialchars($showarticles['title']); ?></a></h2>
                </div>
@@ -17,7 +16,7 @@
                </div>
             </div>
         <?php } ?>
-        <!-- {} permet defaire du php sur plusieurs lignes toujoursdans while/ fetch tableau à mieux renseigner -->
+        <!-- {} permet defaire du php sur plusieurs lignes toujours dans la boucle while-->
     </section>
 </div>
 <?php $content = ob_get_clean(); ?>

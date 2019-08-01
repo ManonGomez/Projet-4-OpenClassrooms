@@ -1,4 +1,5 @@
 <?php
+
 namespace model\frontend;
 
 
@@ -10,7 +11,7 @@ class CommentsManager extends Manager
     {
 
         $bdd = $this->dbConnect();
-         $comment = $bdd->prepare("SELECT * FROM comments WHERE IdArticle = ? ORDER BY dateComment DESC");
+        $comment = $bdd->prepare("SELECT * FROM comments WHERE IdArticle = ? ORDER BY dateComment DESC");
         $comment->execute(array($IDarticle));
         return $comment;
     }
@@ -22,11 +23,12 @@ class CommentsManager extends Manager
         $reqIDcomment = $bdd->query('SELECT Id FROM comments WHERE Id=(SELECT MAX(Id) FROM comments)');
         return $reqIDcomment;
     }
-    
-      public function postComment($idArticle, $author, $comment) {
+
+    public function postComment($idArticle, $author, $comment)
+    {
 
         $bdd = $this->dbConnect();
-        $comments = $bdd->prepare( 'INSERT INTO comments(text, dateComment, pseudo, IdArticle) VALUES(?,NOW(), ?,?)');
+        $comments = $bdd->prepare('INSERT INTO comments(text, dateComment, pseudo, IdArticle) VALUES(?,NOW(), ?,?)');
         $affectedLines = $comments->execute(array($comment, $author, $idArticle));
 
         return $affectedLines;

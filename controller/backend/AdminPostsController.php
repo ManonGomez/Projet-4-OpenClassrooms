@@ -1,4 +1,5 @@
 <?php
+
 namespace controller\backend;
 
 use model\backend\Manager;
@@ -18,8 +19,8 @@ class AdminPostsController extends MainController
         require('view/backend/template_gestion.php');
     }
 
-    
-    
+
+
     public function createPost()
     {
         $postsManager = new AdminPostsManager();
@@ -33,7 +34,7 @@ class AdminPostsController extends MainController
                 $insertarticle = $postsManager->createArticle($titlearticle, $textarticle);
                 // -> = pour preparer et executer la bdd
                 $message = "L'article à bien été posté";
-                header("Location:  index.php?action=admin&page=listposts&page=editpost&id=".$insertarticle);
+                header("Location:  index.php?action=admin&page=listposts&page=editpost&id=" . $insertarticle);
             } else {
                 $error = "Veuillez remplir tous les champs";
             }
@@ -42,7 +43,7 @@ class AdminPostsController extends MainController
         require('view/backend/template_create.php');
     }
 
-    
+
     public function updatePost($idPost)
     {
         $postsManager = new AdminPostsManager();
@@ -54,10 +55,10 @@ class AdminPostsController extends MainController
                 $txt = htmlspecialchars($_POST['textarea']);
 
                 $uparticle = $postsManager->upadteArticle($titlearticle, $txt, $idPost);
-                header("Location:  index.php?action=admin&page=listposts&page=editpost&id=".$idPost);
+                header("Location:  index.php?action=admin&page=listposts&page=editpost&id=" . $idPost);
             } else {
                 $error = 'Veuillez remplir tous les champs';
-                header("Location:  index.php?action=admin&page=editpost&page=editpost&id=".$idPost);
+                header("Location:  index.php?action=admin&page=editpost&page=editpost&id=" . $idPost);
             }
         }
 
@@ -70,11 +71,10 @@ class AdminPostsController extends MainController
         $AdminCommentsManager = new AdminCommentsManager;
         $article = $postsManager->getArticleById($idPost);
 
-        if ( !$article ) {
+        if (!$article) {
             throw new \Exception('Ce billet n\'existe pas');
         }
-        
-        //et supprimer les comm qui vont avec les artcilesen utilisant la jonction
+
         if ($_SESSION['admin'] == 0) {
             header("Location: index.php");
         }
@@ -85,8 +85,8 @@ class AdminPostsController extends MainController
 
         if (isset($_POST['delete'])) {
             $delete = $postsManager->deleteArticle($idPost);
-            $deleteAllCom =$AdminCommentsManager->deleteComWithArticle($IDdeleteAll);
-                  
+            $deleteAllCom = $AdminCommentsManager->deleteComWithArticle($idPost);
+            //supprime les commentaires liés a l'article supprimé
             header("Location: index.php?action=admin&page=listposts");
         }
 
